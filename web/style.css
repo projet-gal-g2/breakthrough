@@ -37,12 +37,163 @@ footer{
 
 position:absolute;
 
-bottom:0;
+bottom:30px;
 
 width:100%;
 
-padding-top:50px;
+padding-top:100px;
 
 height:50px;
 
+}
+.fa {
+  padding: 20px;
+  font-size: 30px;
+  width: 100px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+.fa-google {
+  background: #dd4b39;
+  color: white;
+}
+
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+.fa-youtube {
+  background: #bb0000;
+  color: white;
+}
+
+.fa-instagram {
+  background: #125688;
+  color: white;
+}
+
+.fa-pinterest {
+  background: #cb2027;
+  color: white;
+}
+
+.fa-snapchat-ghost {
+  background: #fffc00;
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.fa-reddit {
+  background: #ff5700;
+  color: white;
+}
+#menu a { 
+	display:block; 
+	color: #fff; 
+	text-decoration:none;
+}
+#menu > li,
+#menu > li li {
+	position: relative;
+	display:inline-block;
+	width: 150px;
+	padding: 6px 15px;
+	background-color: #3B5998;
+	background-image: linear-gradient(#3B5998, #3B5998 50%, #3B5998 50%,#3B5998);
+}
+#menu > li li { background: transparent none; }
+#menu > li li a { color: #fff; }
+#menu > li li:hover { background:#1773b5; }
+#menu > li:first-child {
+	border-right: 1px solid #777;
+	border-radius: 8px 0 0 8px;
+}
+#menu > li + li {
+	border-left: 1px solid #aaa;
+	border-right: 1px solid #777;
+}
+#menu > li:last-child {
+	border-right: 0;
+	border-left: 1px solid #007bb5;
+	border-radius: 0 8px 8px 0 ;
+}
+#menu > li:hover {
+	background-color: #007bb5;
+	background-image: linear-gradient(#3B5998, #3B5998 50%, #3B5998 50%,#3B5998);
+}
+/* (presque) fin de la partie positionnement/déco */
+/* dans cette déclaration, on fixe le max-height */
+#menu ul {
+	position: absolute;
+	top: 2em; left: 0;
+	max-height:0em;	
+	margin: 0; padding: 0;
+	background-color: #007bb5;
+	background-image: linear-gradient(#3B5998,#005B93);
+	overflow: hidden;
+	transition: 1s max-height 0.3s;
+	border-radius: 0 0 8px 8px;
+}
+/* ici on change la valeur de max-height au :hover */
+#menu > li:hover ul {
+	/* à adapter, le minimum est le meilleur mais voyez large 😉 */
+	max-height: 13em;
+}
+h1{
+text-align:center;
+background:linear-gradient (
+#fff 0%,
+#fff 45%,
+#7c8d07 46%,
+#7c8d07 54%, 
+#fff 54%,
+#fff 100%);
+background:-webkit-linear-gradient(
+#fff 0%,
+#fff 45%,
+#7c8d07 46%,
+#7c8d07 54%, 
+#fff 54%,
+#fff 100%);
+background:    -moz-linear-gradient(
+#fff 0%,
+#fff 45%,
+#7c8d07 46%,
+#7c8d07 54%, 
+#fff 54%,
+#fff 100%);
+background:     -ms-linear-gradient(
+#fff 0%,
+#fff 45%,
+#7c8d07 46%,
+#7c8d07 54%, 
+#fff 54%,
+#fff 100%);
+background:      -o-linear-gradient(
+#fff 0%,
+#fff 45%,
+#7c8d07 46%,
+#7c8d07 54%, 
+#fff 54%,
+#fff 100%);
+}
+h1 span{
+background:#fff;padding:0 20px;
 }
