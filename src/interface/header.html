@@ -139,15 +139,15 @@
 			<h2>Connexion</h2>
 			</div>
 			<div class="modal-body" align="center">
-			<form method="post" action="traitement.php">
+			<form method="post" action="jeu.php" class="pro-form" id="pro-form1">
 	<fieldset>
 		<legend>Identification</legend>
 			
 			<label for="pseudo">Votre pseudo :</label> 
-			<input type="text" name="pseudo" id="pseudo" />
+			<input type="text" name="pseudo" id="pseudo" required="required" />
 			
 			<label for="password">Mot de passe :</label> 
-			<input type="text" name="password" id="password" />
+			<input type="text" name="password" id="password" required="required"/>
 			
 			<input type="submit" value="Connexion" />
 	</fieldset>
