@@ -16,17 +16,16 @@
 <body>
 	
 	<?php include "header2.html"; ?>
-	<div class="container">
-		<div align="center">
-			<ul id="menu bouton" >
-			<li><a href="#">Jouer</a>
-				<ul>
-					<li><a href="JcJ.php">Joueur vs Joueur</a></li>
-					<li><a href="JcIA">Joueur vs IA</a></li>
-					<li><a href="Regles.php">Règles du Jeu</a></li>
-				</ul>
-			</li>
-		</ul>
+	<div class="container test">
+		<div class="row">
+			<div class="col-lg-offset-1 col-lg-3  centre mini_intro">
+				<div align="center">
+					<button class="button">Jouer</button>
+				</div>
+			</div>
+			<div class="col-lg-offset-4 col-lg-3  centre intro mini_intro">
+				<h3>LeaderBoard</h3>
+			</div>
 		</div>
 	</div>	
 	<footer><?php include "footer.html"; ?></footer>
