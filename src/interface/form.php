@@ -7,7 +7,7 @@
  </head>
  <h1> <span> BREAKTHROUGH</span></h1>
  <?php include "header.html"; ?>
- <div align="center"> <?php include "2.html"; ?></div>
+ <div align="center"> <?php include "formulaire.html"; ?></div>
 
 <footer>
 <?php include "footer.html"; ?></footer>
