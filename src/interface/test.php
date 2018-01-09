@@ -11,7 +11,7 @@
 
  </head>
  <body>
-<h1> <span> BREAKTHROUGH</span></h1>
+
 <?php include "header.html"; ?>
 
 <div id="pContainer" >
