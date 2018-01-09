@@ -121,8 +121,6 @@ BreakthroughTestCase.prototype.testPossibleStroke = function () {
 BreakthroughTestCase.prototype.testConvertCoord = function () {
     var newEngine = new Breakthrough.Engine();
     newEngine.initialisation();
-    var initBoard = newEngine.getGameBoard();
-
      var test = newEngine.coordToStroke(1,0);
     assertTrue( test === 8);
 };
@@ -130,7 +128,6 @@ BreakthroughTestCase.prototype.testConvertCoord = function () {
 // Test du basculement de joueur
 BreakthroughTestCase.prototype.testSwapCurrentPlayer = function (){
     var newEngine = new Breakthrough.Engine();
-    var player = new Breakthrough.Human();
     newEngine.initialisation();
 
     var firstPlayer = newEngine.getCurrentPlayer();
@@ -160,4 +157,15 @@ BreakthroughTestCase.prototype.testChooseStroke = function () {
 
     console.log('Coups possibles après choix coup départ : \n ' + possibleChooseStroke);
     assertTrue (counter === 0 && possibleChooseStroke.length !== 0 );
+};
+
+// Test conversion Coup en Coordonnées
+BreakthroughTestCase.prototype.testStrokeToCoord = function () {
+    var newEngine = new Breakthrough.Engine();
+    var initBoard = newEngine.getGameBoard();
+    var stroke = new Breakthrough.Stroke(10,62);
+    newEngine.initialisation();
+
+    var tabCoord = newEngine.strokeToCoord(stroke);
+    assertTrue(tabCoord[0] === 1 && tabCoord[1] === 2 && tabCoord[2] === 7 && tabCoord[3] === 6);
 };

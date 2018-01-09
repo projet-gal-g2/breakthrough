@@ -166,8 +166,23 @@ Breakthrough.Engine = function () {
         return listStroke;
     };
 
-	this.coordToStroke = function (coordX, coordY) {
-	    var strokeCoord =  coordX * Breakthrough.ONE_LINE + coordY;
-	    return strokeCoord;
+	this.coordToStroke = function (line, column) {
+	    return line * Breakthrough.ONE_LINE + column;
+    };
+
+	this.strokeToCoord = function (strokes) {
+        var lineStart = strokes.getStartStroke() / Breakthrough.ONE_LINE | 0;
+        var columnStart = strokes.getStartStroke() % Breakthrough.ONE_LINE;
+        var lineEnd = strokes.getEndStroke() / Breakthrough.ONE_LINE | 0;
+        var columnEnd = strokes.getEndStroke() % Breakthrough.ONE_LINE;
+
+        if (lineStart < 0){
+            lineStart = 0;
+        }
+        if (lineEnd < 0){
+            lineEnd = 0;
+        }
+
+        return [lineStart, columnStart, lineEnd, columnEnd];
     };
 };
