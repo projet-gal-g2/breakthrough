@@ -37,4 +37,11 @@ Breakthrough.Engine = function () {
 	this.getPiece = function (numSquare) {
 		return game_Board[numSquare];
 	};
+
+	this.setPiece2D = function (lineSquare, columnSquare, typeOfPiece) {
+		game_Board[lineSquare * Breakthrough.ONE_LINE+ columnSquare] = typeOfPiece;
+	};
+	this.getPiece2D = function (lineSquare, columnSquare){
+		return game_Board[lineSquare * Breakthrough.ONE_LINE+ columnSquare];
+	};
 };
