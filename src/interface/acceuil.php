@@ -17,11 +17,7 @@
 	
 	<?php include "header.html"; ?>
 	<div class="container">
-		<div class ="row"> 
-			<div class="col-md-6 col-lg-6  col-md-offset-3 " style="text-align:center;font-size:45px;color:black;font-weight:bold;">
-				Breakthrough 
-			</div>
-		</div>
+
 		<div class="row"> 
 			 <div class="col-lg-6 intro mini_intro">
 				<h3>Vidéo</h3>
