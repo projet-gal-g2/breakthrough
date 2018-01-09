@@ -80,7 +80,6 @@ BreakthroughTestCase.prototype.testSetPiece = function () {
     var newEngine = new Breakthrough.Engine();
     newEngine.initialisation();
     var initBoard = newEngine.getGameBoard();
-
     var temp_Piece = newEngine.getPiece(0);
     newEngine.setPiece(0, Breakthrough.Piece.EMPTY);
     assertTrue(temp_Piece !== initBoard[0]);
@@ -107,4 +106,24 @@ BreakthroughTestCase.prototype.testSetPiece2D = function () {
     newEngine.setPiece2D(0,5,Breakthrough.Piece.EMPTY);
 
     assertTrue(tempPiece !== initBoard[5]);
+};
+
+// Test coups possibles
+BreakthroughTestCase.prototype.testPossibleStroke = function () {
+    var newEngine = new Breakthrough.Engine();
+    newEngine.initialisation();
+    var initBoard = newEngine.getGameBoard();
+
+    console.log(newEngine.possibleStroke());
+    assertTrue(1==1);
+};
+
+// Test conversion coordonnée en un Coup
+BreakthroughTestCase.prototype.testConvertCoord = function () {
+    var newEngine = new Breakthrough.Engine();
+    newEngine.initialisation();
+    var initBoard = newEngine.getGameBoard();
+
+     var test = newEngine.coordToStroke(1,0);
+    assertTrue( test === 8);
 };
