@@ -114,7 +114,6 @@ BreakthroughTestCase.prototype.testPossibleStroke = function () {
     newEngine.initialisation();
     var initBoard = newEngine.getGameBoard();
 
-    console.log(newEngine.possibleStroke());
     assertTrue(1==1);
 };
 
@@ -126,4 +125,39 @@ BreakthroughTestCase.prototype.testConvertCoord = function () {
 
      var test = newEngine.coordToStroke(1,0);
     assertTrue( test === 8);
+};
+
+// Test du basculement de joueur
+BreakthroughTestCase.prototype.testSwapCurrentPlayer = function (){
+    var newEngine = new Breakthrough.Engine();
+    var player = new Breakthrough.Human();
+    newEngine.initialisation();
+
+    var firstPlayer = newEngine.getCurrentPlayer();
+    newEngine.nextPlayer();
+
+    assertTrue(newEngine.getCurrentPlayer() !== firstPlayer);
+};
+// Test du choix Humain d'un coup possible
+BreakthroughTestCase.prototype.testChooseStroke = function () {
+    var newEngine = new Breakthrough.Engine();
+    var player = new Breakthrough.Human();
+    newEngine.initialisation();
+    newEngine.nextPlayer();
+    var possibleStroke = newEngine.possibleStroke();
+    console.log('Coups possibles : \n' + possibleStroke );
+    var startStroke = 8;
+    console.log("Taille liste coups possibles : " + possibleStroke.length);
+    var possibleChooseStroke = player.chooseStroke(possibleStroke, startStroke);
+
+    var counter = 0;
+    console.log('Taille liste coups possibles en fonction du coup de départ : ' + possibleChooseStroke.length);
+    for ( var indexPossible = 0; indexPossible < possibleChooseStroke.length; indexPossible ++) {
+        if ( possibleChooseStroke[indexPossible].getStartStroke() !== startStroke ){
+            counter ++;
+        }
+    }
+
+    console.log('Coups possibles après choix coup départ : \n ' + possibleChooseStroke);
+    assertTrue (counter === 0 && possibleChooseStroke.length !== 0 );
 };

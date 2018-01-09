@@ -167,7 +167,7 @@ Breakthrough.Engine = function () {
     };
 
 	this.coordToStroke = function (coordX, coordY) {
-	    var strokeDepartClicked =  coordX * Breakthrough.ONE_LINE + coordY;
-	    return strokeDepartClicked;
+	    var strokeCoord =  coordX * Breakthrough.ONE_LINE + coordY;
+	    return strokeCoord;
     };
 };
