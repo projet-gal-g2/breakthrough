@@ -49,7 +49,7 @@ height:50px;
 .fa {
   padding: 20px;
   font-size: 30px;
-  width: 50px;
+  width: 100px;
   text-align: center;
   text-decoration: none;
   margin: 5px 2px;
@@ -132,7 +132,7 @@ height:50px;
 #menu > li:last-child {
 	border-right: 0;
 	border-left: 1px solid #007bb5;
-	border-radius: 0 px 8px 0 ;
+	border-radius: 0 8px 8px 0 ;
 }
 #menu > li:hover {
 	background-color: #007bb5;
@@ -155,4 +155,45 @@ height:50px;
 #menu > li:hover ul {
 	/* à adapter, le minimum est le meilleur mais voyez large 😉 */
 	max-height: 13em;
+}
+h1{
+text-align:center;
+background:linear-gradient (
+#fff 0%,
+#fff 45%,
+#7c8d07 46%,
+#7c8d07 54%, 
+#fff 54%,
+#fff 100%);
+background:-webkit-linear-gradient(
+#fff 0%,
+#fff 45%,
+#7c8d07 46%,
+#7c8d07 54%, 
+#fff 54%,
+#fff 100%);
+background:    -moz-linear-gradient(
+#fff 0%,
+#fff 45%,
+#7c8d07 46%,
+#7c8d07 54%, 
+#fff 54%,
+#fff 100%);
+background:     -ms-linear-gradient(
+#fff 0%,
+#fff 45%,
+#7c8d07 46%,
+#7c8d07 54%, 
+#fff 54%,
+#fff 100%);
+background:      -o-linear-gradient(
+#fff 0%,
+#fff 45%,
+#7c8d07 46%,
+#7c8d07 54%, 
+#fff 54%,
+#fff 100%);
+}
+h1 span{
+background:#fff;padding:0 20px;
 }
