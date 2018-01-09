@@ -17,7 +17,7 @@
 	right : 350px;
     top: 200px;
     width: 200px;
-    border: 3px solid #3B5998;
+    border: 3px solid #582900;
     padding: 5px;
 }
 .Joueur1 {
@@ -25,7 +25,7 @@
 	left : 350px;
     top: 200px;
     width: 200px;
-    border: 3px solid #3B5998;
+    border: 3px solid #582900;
     padding: 5px;
 }
 .Joueur2 {
@@ -33,7 +33,7 @@
 	left : 350px;
     bottom: 150px;
     width: 200px;
-    border: 3px solid #3B5998;
+    border: 3px solid #582900;
     padding: 5px;
 }
 .modal {
@@ -93,7 +93,7 @@
 
 .modal-header {
     padding: 2px 16px;
-    background-color: #3B5998;
+    background-color: #582900;
     color: white;
 }
 
@@ -111,7 +111,6 @@
 }
 </style>
  <body>
-<h1> <span> BREAKTHROUGH</span></h1>
 <?php include "header2.html"; ?>
 <div class = "abandonner">
  <button type="button" align="middle-right" class="btn btn-danger">Abandonner</button>
