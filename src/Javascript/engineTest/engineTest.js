@@ -1,19 +1,21 @@
 "use strict";
 
-var Breakthrough = require('../../Breakthrough.js');
 var BreakthroughTestCase = TestCase("BreakthroughTestCase");
 
 // Test des deux premières lignes du tableau
 BreakthroughTestCase.prototype.testTwoFirstLines = function () {
-    var firstLines = ['BLACK','BLACK','BLACK','BLACK','BLACK','BLACK','BLACK','BLACK',
-        'BLACK','BLACK','BLACK','BLACK','BLACK','BLACK','BLACK','BLACK'];
+    var firstLines = [];
+    for ( var iter = 0; iter < Breakthrough.ONE_LINE*2; iter++) {
+        firstLines[iter] = Breakthrough.Piece.BLACK;
+    }
 
     var newEngine = new Breakthrough.Engine();
+    newEngine.initialisation();
     var initBoard = newEngine.getGameBoard();
     var errorCounter = 0;
 
-    for ( var firstSquares = 0; firstSquares < ONE_LINE*2; firstSquares++ ) {
-        if ( firstLines[firstSquares] !== initBoard[firstSquares] ) {
+    for ( var firstSquares = 0; firstSquares < Breakthrough.ONE_LINE*2; firstSquares++ ) {
+        if ( firstLines[firstSquares] != initBoard[firstSquares] ) {
             errorCounter ++;
         }
     }
@@ -22,16 +24,18 @@ BreakthroughTestCase.prototype.testTwoFirstLines = function () {
 
 // Test du milieu tableau
 BreakthroughTestCase.prototype.testMiddleBoard = function () {
-    var firstLines = ['EMPTY','EMPTY','EMPTY','EMPTY','EMPTY','EMPTY','EMPTY','EMPTY',
-        'EMPTY','EMPTY','EMPTY','EMPTY','EMPTY','EMPTY','EMPTY','EMPTY'];
-
+    var midBoard = [];
     var newEngine = new Breakthrough.Engine();
     var initBoard = newEngine.getGameBoard();
     var errorCounter = 0;
-    var lastTwoLines = SIZEBOARD - (ONE_LINE*2);
+    var lastTwoLines = Breakthrough.SIZEBOARD - (Breakthrough.ONE_LINE*2);
 
-    for ( var firstSquares = ONE_LINE*2; firstSquares <lastTwoLines; firstSquares++ ) {
-        if ( firstLines[firstSquares] !== initBoard[firstSquares] ) {
+    for ( var iter = 0; iter < Breakthrough.ONE_LINE*2; iter++) {
+        midBoard[iter] = Breakthrough.Piece.EMPTY;
+    }
+
+    for ( var firstSquares = Breakthrough.ONE_LINE*2; firstSquares <lastTwoLines; firstSquares++ ) {
+        if ( midBoard[firstSquares] !== initBoard[firstSquares] ) {
             errorCounter ++;
         }
     }
@@ -40,15 +44,16 @@ BreakthroughTestCase.prototype.testMiddleBoard = function () {
 
 // Test des deux dernières lignes du tableau
 BreakthroughTestCase.prototype.testTwoLastLines = function () {
-    var lastLines = ['WHITE','WHITE','WHITE','WHITE','WHITE','WHITE','WHITE','WHITE',
-        'WHITE','WHITE','WHITE','WHITE','WHITE','WHITE','WHITE','WHITE'];
-
+    var lastLines = [];
     var newEngine = new Breakthrough.Engine();
     var initBoard = newEngine.getGameBoard();
     var errorCounter = 0;
-    var lastTwoLines = SIZEBOARD - (ONE_LINE*2);
+    var lastTwoLines = Breakthrough.SIZEBOARD - (Breakthrough.ONE_LINE*2);
 
-    for ( var lastSquares = lastTwoLines; lastSquares < SIZEBOARD; lastSquares++ ) {
+    for ( var iter = 0; iter < Breakthrough.ONE_LINE*2; iter++) {
+        lastLines[iter] = Breakthrough.Piece.BLACK;
+    }
+    for ( var lastSquares = lastTwoLines; lastSquares < Breakthrough.SIZEBOARD; lastSquares++ ) {
         if ( lastLines[lastSquares] !== initBoard[lastSquares] ) {
             errorCounter ++;
         }
