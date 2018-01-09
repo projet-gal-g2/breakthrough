@@ -3,37 +3,38 @@
  */
 
 
-Breakthrough.Plateau = function(c) {
-        var container = c;
-        var square_dim = 35;
+Breakthrough.Plateau = function() {
+        var square_dim = 50;
 
         this.initialize = function() {
-
-            container.write("<table border=0 cellspacing=0 cellpadding=0 width="+(square_dim*8+8) + ">");
+            var tab = "<table style='margin: auto;' border=0 cellspacing=0 cellpadding=0 width="+(square_dim*8+8) + ">";
             var color = 0;
             for(var i = 0; i < 8; i++)
             {
-                container.write("<tr>");
-                for(var j = 0; i < 8; i++)
+                tab += "<tr>";
+                for(var j = 0; j < 8; j++)
                 {
                     switch(color)
                     {
                         case 0:
-                            container.write("<td><div style='background-color: black' width=" + square_dim + " height=" + square_dim + "</div></td>");
+                            tab += "<td><div style='background-color: orange; width: " + square_dim + "; height: " + square_dim + ";'</div></td>";
                             break;
 
                         case 1:
-                            container.write("<td><div style='background-color: white' width=" + square_dim + " height=" + square_dim + "</div></td>");
+                            tab += "<td><div style='background-color: maroon; width: " + square_dim + "; height: " + square_dim + ";'</div></td>";
                             break;
                     }
 
                     color = (color + 1) % 2;
                 }
 
-                container.write("</tr>");
+                tab += "</tr>";
+                color = (color + 1) % 2;
             }
 
-            container.write("</table>");
+            tab += "</table>";
+
+            $("#pContainer").html(tab);
         };
 
 };
