@@ -142,20 +142,20 @@ BreakthroughTestCase.prototype.testChooseStroke = function () {
     newEngine.initialisation();
     newEngine.nextPlayer();
     var possibleStroke = newEngine.possibleStroke();
-    console.log('Coups possibles : \n' + possibleStroke );
+    //console.log('Coups possibles : \n' + possibleStroke );
     var startStroke = 8;
-    console.log("Taille liste coups possibles : " + possibleStroke.length);
+    //console.log("Taille liste coups possibles : " + possibleStroke.length);
     var possibleChooseStroke = player.chooseStroke(possibleStroke, startStroke);
 
     var counter = 0;
-    console.log('Taille liste coups possibles en fonction du coup de départ : ' + possibleChooseStroke.length);
+    //console.log('Taille liste coups possibles en fonction du coup de départ : ' + possibleChooseStroke.length);
     for ( var indexPossible = 0; indexPossible < possibleChooseStroke.length; indexPossible ++) {
         if ( possibleChooseStroke[indexPossible].getStartStroke() !== startStroke ){
             counter ++;
         }
     }
 
-    console.log('Coups possibles après choix coup départ : \n ' + possibleChooseStroke);
+   // console.log('Coups possibles après choix coup départ : \n ' + possibleChooseStroke);
     assertTrue (counter === 0 && possibleChooseStroke.length !== 0 );
 };
 
@@ -168,4 +168,23 @@ BreakthroughTestCase.prototype.testStrokeToCoord = function () {
 
     var tabCoord = newEngine.strokeToCoord(stroke);
     assertTrue(tabCoord[0] === 1 && tabCoord[1] === 2 && tabCoord[2] === 7 && tabCoord[3] === 6);
+};
+
+// Test du choix d'un coup par l'I.A Random
+BreakthroughTestCase.prototype.testRandomPlay = function () {
+    var newEngine = new Breakthrough.Engine();
+    var player = new Breakthrough.Random();
+    newEngine.initialisation();
+    var counter = 0;
+    var possibleStroke = newEngine.possibleStroke();
+    var strokeChoose = player.randomChooseStroke(possibleStroke);
+
+    for ( var indexStroke = 0; indexStroke < possibleStroke.length; indexStroke++){
+        if (possibleStroke[indexStroke].getStartStroke() === strokeChoose.getStartStroke() &&
+        possibleStroke[indexStroke].getEndStroke() === strokeChoose.getEndStroke()){
+            counter++;
+            break;
+        }
+    }
+    assertTrue (counter === 1);
 };
