@@ -19,15 +19,15 @@
 	<div class="container">
 
 		<div class="row"> 
-			 <div class="col-lg-6 intro mini_intro">
+			 <div class="col-sm-4 col-md-5 col-lg-6 intro mini_intro">
 				<h3>Vidéo</h3>
 				<p>Lorem ipsum dolor..</p>
 				<p>Ut enim ad..</p>
 			</div>
-			<div class="col-lg-6 intro mini_intro">
+			<div class="col-sm-4 col-md-5 col-lg-6 intro mini_intro">
 				<h3>LeaderBoard</h3>
 			</div>
-			<div class="col-lg-12 intro">    
+			<div class="col-sm-8 col-md-10 col-lg-12 intro">    
 				<h3>Règles</h3><br>
 				<p>Il est joué sur un damier, d´habitude 8x8, mais on peut utiliser des tableaux de différentes dimensions. Chaque joueur dispose de 16 pions (blancs et noirs chacun d´eux) situés sur les 2 premières rangées les plus proches de chacun d´eux.</p>
 				<p>A tour de rôle, les joueurs déplacent une pièce de leur couleur.</p>
