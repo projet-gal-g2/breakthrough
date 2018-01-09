@@ -1,6 +1,6 @@
 "use strict"
 // Définition des Pions
-Breakthrough.Piece = {BLACK: 1, WHITE: 2, EMPTY: 0};
+Breakthrough.Piece = {BLACK: 2, WHITE: 1, EMPTY: 0};
 Breakthrough.ONE_LINE = 8;
 Breakthrough.SIZEBOARD = Breakthrough.ONE_LINE * Breakthrough.ONE_LINE;
 
@@ -30,6 +30,25 @@ Breakthrough.Engine = function () {
 		currentPlayer = Breakthrough.Piece.WHITE;
 		opposingPlayer = Breakthrough.Piece.BLACK;
 	};
+
+	this.displayGameBoard = function () {
+        var stringGameBoard ='\n';
+	    for ( var index = 0; index < Breakthrough.SIZEBOARD; index++){
+	        if ( this.getPiece(index) === Breakthrough.Piece.BLACK ){
+                stringGameBoard += 'B ';
+            }
+            if ( this.getPiece(index) === Breakthrough.Piece.EMPTY ){
+                stringGameBoard += '. ';
+            }
+            if ( this.getPiece(index) === Breakthrough.Piece.WHITE ){
+                stringGameBoard += 'W ';
+            }
+            if ( index % Breakthrough.ONE_LINE === Breakthrough.ONE_LINE - 1 ){
+	            stringGameBoard += '\n '
+            }
+        }
+        console.log(stringGameBoard);
+    };
 
 	this.getGameBoard = function () {
 	  return game_Board;
@@ -184,5 +203,43 @@ Breakthrough.Engine = function () {
         }
 
         return [lineStart, columnStart, lineEnd, columnEnd];
+    };
+
+    this.majBoard = function(stroke){
+        if (currentPlayer === Breakthrough.Piece.BLACK) {
+            game_Board[stroke.getStartStroke()] = Breakthrough.Piece.EMPTY;
+            game_Board[stroke.getEndStroke()] = Breakthrough.Piece.BLACK;
+        } else {
+            game_Board[stroke.getStartStroke()] = Breakthrough.Piece.EMPTY;
+            game_Board[stroke.getEndStroke()] = Breakthrough.Piece.WHITE;
+        }
+    };
+
+    this.countOfOpposingPiece = function(){
+        var nbPiece = 0;
+        for ( var indexPiece = 0; indexPiece < Breakthrough.SIZEBOARD; indexPiece++){
+            if ( this.getPiece(indexPiece) === this.getOpposingPlayer()){
+                nbPiece++;
+            }
+        }
+        return nbPiece;
+    };
+
+    this.currentPlayerWin = function(){
+        for ( var indexBoard = Breakthrough.SIZEBOARD - Breakthrough.ONE_LINE; indexBoard < Breakthrough.SIZEBOARD; indexBoard++){
+            // Si le joueur des pièces noirs à une de ces pièces sur la dernière ligne du tableau ou si l'adversaire
+            // n'a plus de pièces
+
+            if (this.getPiece(indexBoard) === Breakthrough.Piece.BLACK  || this.countOfOpposingPiece() === 0){
+                return Breakthrough.Piece.BLACK;
+            }
+        }
+
+        for ( var index = 0; index < Breakthrough.ONE_LINE; index ++){
+            if (this.getPiece(index) === Breakthrough.Piece.WHITE || this.countOfOpposingPiece() === 0){
+                return Breakthrough.Piece.WHITE;
+            }
+        }
+        return Breakthrough.Piece.EMPTY;
     };
 };

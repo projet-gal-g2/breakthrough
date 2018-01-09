@@ -173,11 +173,11 @@ BreakthroughTestCase.prototype.testStrokeToCoord = function () {
 // Test du choix d'un coup par l'I.A Random
 BreakthroughTestCase.prototype.testRandomPlay = function () {
     var newEngine = new Breakthrough.Engine();
-    var player = new Breakthrough.Random();
+    var randomIa = new Breakthrough.Random();
     newEngine.initialisation();
     var counter = 0;
     var possibleStroke = newEngine.possibleStroke();
-    var strokeChoose = player.randomChooseStroke(possibleStroke);
+    var strokeChoose = randomIa.randomChooseStroke(possibleStroke);
 
     for ( var indexStroke = 0; indexStroke < possibleStroke.length; indexStroke++){
         if (possibleStroke[indexStroke].getStartStroke() === strokeChoose.getStartStroke() &&
@@ -187,4 +187,33 @@ BreakthroughTestCase.prototype.testRandomPlay = function () {
         }
     }
     assertTrue (counter === 1);
+};
+
+// Test de la mise à jour du plateau de jeu après un coup
+BreakthroughTestCase.prototype.testMajBoard = function () {
+    var newEngine = new Breakthrough.Engine();
+    var randomIa = new Breakthrough.Random();
+    newEngine.initialisation();
+    newEngine.displayGameBoard();
+    var initialGameBoard = newEngine.getGameBoard();
+    var possiblesStroke;
+    var strokeChoose;
+
+    var gameLife = 0;
+    console.log("Turn of player " + newEngine.getCurrentPlayer());
+    while ( gameLife !== 1){
+        possiblesStroke = newEngine.possibleStroke();
+        strokeChoose = randomIa.randomChooseStroke(possiblesStroke);
+        newEngine.majBoard(strokeChoose);
+        console.log(strokeChoose);
+        newEngine.displayGameBoard();
+        if (newEngine.currentPlayerWin() !== Breakthrough.Piece.EMPTY){
+            gameLife = 1;
+            newEngine.displayGameBoard();
+            console.log("Joueur " + newEngine.getCurrentPlayer() + " win !");
+        } else {
+            newEngine.nextPlayer();
+            console.log("Turn of player " + newEngine.getCurrentPlayer());
+        }
+    }
 };
