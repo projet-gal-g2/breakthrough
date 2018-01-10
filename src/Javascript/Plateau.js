@@ -12,7 +12,8 @@ Breakthrough.Plateau = function() {
         var isEndGame = false;
         var player1;
         var player2;
-
+        var time = 0;
+        var intervalId = null;
 
         this.initialize = function() {
             engine = new Breakthrough.Engine();
@@ -139,11 +140,56 @@ Breakthrough.Plateau = function() {
 
     this.abandon = function()
     {
-        
+        doAbandon();
+    };
+
+    var increaseTimer = function()
+    {
+        time++;
+        $("#timer").html("Timer : " + time + "s");
+
+        if (time >= 30)
+        {
+            window.clearInterval(intervalId);
+            doAbandon();
+        }
+    };
+
+    var doAbandon = function()
+    {
+        window.clearInterval(intervalId);
+
+        var idWinner = engine.getOpposingPlayer().getId();
+        var idLooser = engine.getCurrentPlayer().getId();
+        var idGame = parseInt($(".gameContainer").attr("id"));
+
+        $.ajax(
+            {
+                type: "POST",
+                url: "end_game_maj.php",
+                data:
+                    {
+                        "idGame":idGame,
+                        "idLooser":idLooser,
+                        "idWinner":idWinner,
+                        "addScoreWinner": 10,
+                        "addScoreLooser": -1
+                    },
+                success: function(data) {}
+            });
     };
 
     var play = function()
     {
+        if (intervalId !== null)
+        {
+            window.clearInterval(intervalId);
+        }
+
+        time = 0;
+        $("#timer").html("Timer : " + time + "s");
+        intervalId = window.setInterval(increaseTimer, 1000);
+
         if (engine.currentPlayerWin() === null){
             engine.nextPlayer();
         }
@@ -177,6 +223,26 @@ Breakthrough.Plateau = function() {
     {
         isEndGame = true;
         console.log("le joueur : " + engine.currentPlayerWin().getColorPlayer() + " a gagné !");
+
+        var idWinner = engine.currentPlayerWin().getId();
+        var idLooser = engine.getOpposingPlayer().getId();
+        var idGame = parseInt($(".gameContainer").attr("id"));
+
+        $.ajax(
+            {
+                type: "POST",
+                url: "end_game_maj.php",
+                data:
+                    {
+                        "idGame":idGame,
+                        "idLooser":idLooser,
+                        "idWinner":idWinner,
+                        "addScoreWinner": 10,
+                        "addScoreLooser": 1
+                    },
+                success: function(data) {}
+            });
+
     };
 
     var movePawn = function(from, to)
@@ -250,15 +316,5 @@ Breakthrough.Plateau = function() {
 
         $(id_case).attr("class", my_class);
         $(id_case).css({'background-color' : color });
-    };
-
-    var sleep = function(milliseconds)
-    {
-        var start = new Date().getTime();
-        for (var i = 0; i < 1e7; i++) {
-            if ((new Date().getTime() - start) > milliseconds){
-                break;
-            }
-        }
     };
 };
