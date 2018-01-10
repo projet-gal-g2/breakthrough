@@ -1,0 +1,6 @@
+#table_leaderboard td:not(.non_aff){
+	border:solid black 1px;
+}
+#table_leaderboard {
+	width:100%;
+}

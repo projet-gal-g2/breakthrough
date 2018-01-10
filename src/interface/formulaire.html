@@ -1,0 +1,74 @@
+<html>
+	<head lang="en">
+		<title>Formulaire</title>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta charset="utf-8"/>
+		<script type="text/javascript" src="script2.js"></script>
+		<link rel="stylesheet" type="text/css" href="script1.css"/>
+	
+
+
+  
+
+		<!DOCTYPE html>
+
+	</head>
+	<body>
+	
+<form accept-charset="UTF-8" action="test.php" class="pro-form" id="pro-form" method="post">
+
+  <h2>Formulaire</h2>
+
+
+
+  <input id="subscription_plan_id" name="subscription[plan_id]" type="hidden" value="1">
+
+  <input id="subscription_stripe_card_token" name="subscription[stripe_card_token]" type="hidden">
+
+    <div class="field">
+      <label for="card_name">Pseudo<font color="Red">*</font></label>
+      <br>
+      <input id="card_name" required minlength="6" type="text" name="pseudo">
+
+    </div>
+	
+	<div class="field">
+      <label for="card_name">Nom & Prenom<font color="Red">*</font> </label>
+      <br>
+      <input id="card_name" required="required" type="text" name="name">
+    </div>
+		
+	
+
+
+    <div class="field">
+      <label for="mp1">Mot de Passe<font color="Red">*</font></label>
+      <br>
+      <input id="mp1" required="required" type="text">
+    </div>
+	<div id="result" ></div>
+	<div class="field">
+      <label for="mp2"> Confirmation De Mot de Passe<font color="Red">*</font></label>
+      <br>
+      <input id="mp2" required="required" type="text" name="mdp"onkeyup="verif()">
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" name="remember"> Remember me</label>
+    </div>
+	
+
+
+  <div class="actions">
+
+      <input name="commit" type="submit" value="Submit" class="button">
+  </div>
+
+</form>
+
+
+	</body>
+</html>
+		
