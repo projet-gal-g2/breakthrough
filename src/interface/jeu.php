@@ -112,6 +112,7 @@
 </style>
  <body>
 <?php include "header2.html"; ?>
+
 <div class = "abandonner">
  <button type="button" align="middle-right" class="btn btn-danger">Abandonner</button>
 </div>

@@ -82,7 +82,7 @@
       <h2>Formulaire d'inscription</h2>
     </div>
     <div class="modal-body" align="center">
-<form accept-charset="UTF-8" action="jeu.php" class="pro-form" id="pro-form" method="post">
+<form accept-charset="UTF-8" action="principale.php" class="pro-form" id="pro-form" method="post">
 
 
 
@@ -92,29 +92,34 @@
   <input id="subscription_stripe_card_token" name="subscription[stripe_card_token]" type="hidden">
 
     <div class="field">
-      <label for="card_name">Pseudo<font color="Red">*</font></label>
+      <label for="id_pseudo">Pseudo<font color="Red">*</font></label>
       <br>
-      <input id="card_name" required minlength="6" type="text" name="pseudo">
+      <input id="id_pseudo" required minlength="6" type="text" name="pseudo">
 
     </div>
 	
 	<div class="field">
-      <label for="card_name">Nom & Prenom<font color="Red">*</font> </label>
+      <label for="card_name">Nom<font color="Red">*</font> </label>
       <br>
       <input id="card_name" required="required" type="text" name="name">
+           <br>
+      <label for="card_prenom">Prenom<font color="Red">*</font> </label>
+     <br>
+      <input id="card_prenom" required="required" type="text" name="prenom">
+      <br>
     </div>
 		
 	
 
 
     <div class="field">
-      <label for="mp1">Mot de Passe<font color="Red">*</font></label>
+      <label for="mdp1">Mot de Passe<font color="Red">*</font></label>
       <br>
-      <input id="mp1" required="required" type="text">
+      <input id="mdp1" required="required" type="text">
     </div>
 	<div id="result" ></div>
 	<div class="field">
-      <label for="mp2"> Confirmation De Mot de Passe<font color="Red">*</font></label>
+      <label for="mdp2"> Confirmation De Mot de Passe<font color="Red">*</font></label>
       <br>
       <input id="mp2" required="required" type="text" name="mdp"onkeyup="verif()">
     </div>
@@ -139,7 +144,8 @@
 			<h2>Connexion</h2>
 			</div>
 			<div class="modal-body" align="center">
-			<form method="post" action="jeu.php" class="pro-form" id="pro-form1">
+
+<form method="post" action="principale.php">
 	<fieldset>
 		<legend>Identification</legend>
 			
