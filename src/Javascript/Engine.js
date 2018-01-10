@@ -12,6 +12,8 @@ Breakthrough.Engine = function () {
 	// Définition du joueur courant / joueur adverse
     var currentPlayer;
     var opposingPlayer;
+    var player1;
+    var player2;
 
 	this.initialisation = function () {
 		var lastTwoLines = Breakthrough.SIZEBOARD - (Breakthrough.ONE_LINE*2);
@@ -27,9 +29,17 @@ Breakthrough.Engine = function () {
 		for ( var lastSquares = lastTwoLines; lastSquares < Breakthrough.SIZEBOARD; lastSquares++ ) {
 			this.setPiece(lastSquares, Breakthrough.Piece.WHITE);
 		}
-		currentPlayer = Breakthrough.Piece.WHITE;
-		opposingPlayer = Breakthrough.Piece.BLACK;
+
 	};
+
+	this.initializePlayer = function(p1, p2)
+    {
+        player1 = p1;
+        player2 = p2;
+
+        currentPlayer = player2;
+        opposingPlayer = player1;
+    }
 
 	this.displayGameBoard = function () {
         var stringGameBoard ='\n';
@@ -79,8 +89,17 @@ Breakthrough.Engine = function () {
 
 	this.nextPlayer = function () {
 	    var temp = currentPlayer;
-	    currentPlayer = opposingPlayer;
-	    opposingPlayer = temp;
+
+	    if (temp.getColorPlayer() === player1.getColorPlayer())
+        {
+            currentPlayer = player2;
+            opposingPlayer = player1;
+        }
+        else
+        {
+            currentPlayer = player1;
+            opposingPlayer = player2;
+        }
     };
 
 	this.possibleStroke = function () {
@@ -93,7 +112,7 @@ Breakthrough.Engine = function () {
         for ( var square = 0; square < game_Board.length; square++ ) {
                 /// Gestion des coups possibles pour le joueur des pions Noirs ///
 
-                if (this.getCurrentPlayer() === Breakthrough.Piece.BLACK) {
+                if (this.getCurrentPlayer().getColorPlayer() === Breakthrough.Piece.BLACK) {
 
                     if (game_Board[square] === Breakthrough.Piece.BLACK){
                         stroke.startCoord = square;
@@ -206,7 +225,7 @@ Breakthrough.Engine = function () {
     };
 
     this.majBoard = function(stroke){
-        if (currentPlayer === Breakthrough.Piece.BLACK) {
+        if (currentPlayer.getColorPlayer() === Breakthrough.Piece.BLACK) {
             game_Board[stroke.getStartStroke()] = Breakthrough.Piece.EMPTY;
             game_Board[stroke.getEndStroke()] = Breakthrough.Piece.BLACK;
         } else {
@@ -218,7 +237,7 @@ Breakthrough.Engine = function () {
     this.countOfOpposingPiece = function(){
         var nbPiece = 0;
         for ( var indexPiece = 0; indexPiece < Breakthrough.SIZEBOARD; indexPiece++){
-            if ( this.getPiece(indexPiece) === this.getOpposingPlayer()){
+            if ( this.getPiece(indexPiece) === this.getOpposingPlayer().getColorPlayer()){
                 nbPiece++;
             }
         }
@@ -231,16 +250,16 @@ Breakthrough.Engine = function () {
             // n'a plus de pièces
 
             if (this.getPiece(indexBoard) === Breakthrough.Piece.BLACK  || this.countOfOpposingPiece() === 0){
-                return Breakthrough.Piece.BLACK;
+                return player2;
             }
         }
 
         for ( var index = 0; index < Breakthrough.ONE_LINE; index ++){
             if (this.getPiece(index) === Breakthrough.Piece.WHITE || this.countOfOpposingPiece() === 0){
-                return Breakthrough.Piece.WHITE;
+                return player1;
             }
         }
-        return Breakthrough.Piece.EMPTY;
+        return null;
     };
 
     this.getPossibleStroke = function (possibleStroke, startStroke) {

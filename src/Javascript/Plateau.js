@@ -8,9 +8,9 @@ Breakthrough.Plateau = function() {
         var pion_dim = 40;
         var engine;
         var selectedPawn = null;
-        var choosenStroke = null;
         var currentPossibleStrokes;
         var hasHumanChooseStroke = false;
+        var isEndGame = false;
 
         this.initialize = function() {
             engine = new Breakthrough.Engine();
@@ -62,51 +62,59 @@ Breakthrough.Plateau = function() {
         };
 
     $(document).on('click','.case',function(){
-        var lign = parseInt($(this).attr('i'));
-        var column = parseInt($(this).attr('j'));
-        var id_case= "#l" + lign + "c" + column;
+        if (!isEndGame)
+        {
+            var lign = parseInt($(this).attr('i'));
+            var column = parseInt($(this).attr('j'));
+            var id_case= "#l" + lign + "c" + column;
 
 
-        if($(id_case).hasClass('not_selected')){
-            unSelecteAll();
-            var pawn = engine.getPiece2D(lign, column);
-            if (pawn === engine.getCurrentPlayer())
-            {
-                selectedPawn = new SelectedPawn(lign, column);
-                selectCase(lign, column, "red");
-
-                var startStroke = engine.coordToStroke(lign, column);
-                var possibleStrokes = engine.possibleStroke();
-                var human = new Breakthrough.Human();
-                currentPossibleStrokes = human.chooseStroke(possibleStrokes, startStroke);
-
-                for(var i = 0; i < currentPossibleStrokes.length; i++)
+            if($(id_case).hasClass('not_selected')){
+                unSelecteAll();
+                var pawn = engine.getPiece2D(lign, column);
+                if (pawn === engine.getCurrentPlayer().getColorPlayer())
                 {
-                    var coords = engine.strokeToCoord(currentPossibleStrokes[i]);
-                    selectCase(coords[2], coords[3], "green");
-                }
-            }
-            else if (selectedPawn !== null)
-            {
-                for(var i = 0; i < currentPossibleStrokes.length; i++)
-                {
-                    var coords = engine.strokeToCoord(currentPossibleStrokes[i]);
-                    if (coords[2] === lign, coords[3] === column)
+                    selectedPawn = new SelectedPawn(lign, column);
+                    selectCase(lign, column, "red");
+
+                    var startStroke = engine.coordToStroke(lign, column);
+                    var possibleStrokes = engine.possibleStroke();
+
+                    currentPossibleStrokes = engine.getPossibleStroke(possibleStrokes, startStroke);
+
+                    for(var i = 0; i < currentPossibleStrokes.length; i++)
                     {
-                        hasHumanChooseStroke = true;
-                        choosenStroke = engine.coordToStroke(lign, column);
-                        break;
+                        var coords = engine.strokeToCoord(currentPossibleStrokes[i]);
+                        selectCase(coords[2], coords[3], "green");
                     }
                 }
-                //movePawn(selectedPawn, new SelectedPawn(parseInt(lign), parseInt(column)));
+            }
+            else if($(id_case).hasClass('is_selected')){
+                if (selectedPawn !== null && currentPossibleStrokes !== null && currentPossibleStrokes.length > 0)
+                {
+                    for(var i = 0; i < currentPossibleStrokes.length; i++)
+                    {
+                        var coords = engine.strokeToCoord(currentPossibleStrokes[i]);
+                        if (coords[2] === lign, coords[3] === column)
+                        {
+                            hasHumanChooseStroke = true;
+                            var from = selectedPawn;
+                            var to = new SelectedPawn(lign, column);
+
+                            movePawn(from, to);
+
+                            engine.majBoard(currentPossibleStrokes[i]);
+
+                            play();
+                            break;
+                        }
+                    }
+                }
+
+                selectedPawn = null;
+                unSelecteAll();
             }
         }
-        else if($(id_case).hasClass('is_selected')){
-            selectedPawn = null;
-            unSelecteAll();
-            //changeClassAndColor(id_case, "is_selected", "not_selected", $(id_case).attr('color'));
-        }
-
     });
 
     this.getCurrentPlayer = function()
@@ -114,53 +122,48 @@ Breakthrough.Plateau = function() {
         return engine.getCurrentPlayer();
     };
 
-    var getHumanChoosenStroke = function(player)
+    this.startGame = function (player1, player2)
     {
-        var timeOut = false;
-        while(!hasHumanChooseStroke)
-        {
-           sleep(50);
-        }
+        engine.initializePlayer(player1, player2);
 
-        if (timeOut)
-            return null;
-
-        return choosenStroke;
+        play();
     };
 
-    this.startGame = function (vsIa)
+    var play = function()
     {
-        var possiblesStroke;
-        var strokeChoose;
-        var player1 = new Breakthrough.Human();
-        var player2;
-
-        if (vsIa)
-        {
-            player2 = new Breakthrough.Random();
+        if (engine.currentPlayerWin() === null){
+            engine.nextPlayer();
         }
         else
         {
-            player2 = new Breakthrough.Human();
+            gameWin();
         }
 
-        var gameLife = 0;
-        while ( gameLife !== 1){
+        var possiblesStroke;
+        var strokeChoose;
+        var currentPlayer = engine.getCurrentPlayer();
 
+        if (currentPlayer.isIA())
+        {
             possiblesStroke = engine.possibleStroke();
-            strokeChoose = randomIa.randomChooseStroke(possiblesStroke);
+            strokeChoose = engine.randomChooseStroke(possiblesStroke);
+            var coords = engine.strokeToCoord(strokeChoose);
+            var from = new SelectedPawn(coords[0], coords[1]);
+            var to = new SelectedPawn(coords[2], coords[3]);
+
+            movePawn(from, to);
+
             engine.majBoard(strokeChoose);
 
-            newEngine.displayGameBoard();
-            if (newEngine.currentPlayerWin() !== Breakthrough.Piece.EMPTY){
-                gameLife = 1;
-                newEngine.displayGameBoard();
-                console.log("Joueur " + newEngine.getCurrentPlayer() + " win !");
-            } else {
-                newEngine.nextPlayer();
-                console.log("Turn of player " + newEngine.getCurrentPlayer());
-            }
+            play();
         }
+
+    };
+
+    var gameWin = function()
+    {
+        isEndGame = true;
+        console.log(engine.currentPlayerWin().getColorPlayer());
     };
 
     var movePawn = function(from, to)

@@ -8,7 +8,7 @@
     <script type="text/javascript" src="../Javascript/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../Javascript/Breakthrough.js"></script>
     <script type="text/javascript" src="../Javascript/Stroke.js"></script>
-    <script type="text/javascript" src="../Javascript/Human.js"></script>
+    <script type="text/javascript" src="../Javascript/Player.js"></script>
     <script type="text/javascript" src="../Javascript/Engine.js"></script>
     <script type="text/javascript" src="../Javascript/Plateau.js"></script>
 
@@ -25,6 +25,10 @@
 
     var plateau = new Breakthrough.Plateau();
     plateau.initialize();
+    var player1 = new Breakthrough.Player(Breakthrough.Piece.WHITE, true);
+    var player2 = new Breakthrough.Player(Breakthrough.Piece.BLACK, false);
+
+    plateau.startGame(player1, player2);
 </script>
 
 <footer>
