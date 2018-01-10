@@ -5,12 +5,14 @@
 
 Breakthrough.Plateau = function() {
         var square_dim = 50;
-        var pion_dim = 40;
         var engine;
         var selectedPawn = null;
         var currentPossibleStrokes;
         var hasHumanChooseStroke = false;
         var isEndGame = false;
+        var player1;
+        var player2;
+
 
         this.initialize = function() {
             engine = new Breakthrough.Engine();
@@ -122,9 +124,12 @@ Breakthrough.Plateau = function() {
         return engine.getCurrentPlayer();
     };
 
-    this.startGame = function (player1, player2)
+    this.startGame = function (p1, p2)
     {
-        engine.initializePlayer(player1, player2);
+        player1 = p1;
+        player2 = p2;
+        this.initialize();
+        engine.initializePlayer(p1, p2);
 
         play();
     };
@@ -163,7 +168,7 @@ Breakthrough.Plateau = function() {
     var gameWin = function()
     {
         isEndGame = true;
-        console.log(engine.currentPlayerWin().getColorPlayer());
+        console.log("le joueur : " + engine.currentPlayerWin().getColorPlayer() + " a gagné !");
     };
 
     var movePawn = function(from, to)

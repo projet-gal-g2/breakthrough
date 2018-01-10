@@ -24,7 +24,6 @@
 <script>
 
     var plateau = new Breakthrough.Plateau();
-    plateau.initialize();
     var player1 = new Breakthrough.Player(Breakthrough.Piece.WHITE, true);
     var player2 = new Breakthrough.Player(Breakthrough.Piece.BLACK, false);
 
