@@ -8,6 +8,9 @@ Breakthrough.Plateau = function() {
         var pion_dim = 40;
         var engine;
         var selectedPawn = null;
+        var choosenStroke = null;
+        var currentPossibleStrokes;
+        var hasHumanChooseStroke = false;
 
         this.initialize = function() {
             engine = new Breakthrough.Engine();
@@ -59,31 +62,106 @@ Breakthrough.Plateau = function() {
         };
 
     $(document).on('click','.case',function(){
-        var lign = $(this).attr('i');
-        var column = $(this).attr('j');
+        var lign = parseInt($(this).attr('i'));
+        var column = parseInt($(this).attr('j'));
         var id_case= "#l" + lign + "c" + column;
 
 
         if($(id_case).hasClass('not_selected')){
-
-            if (selectedPawn !== null)
-            {
-                movePawn(selectedPawn, new SelectedPawn(parseInt(lign), parseInt(column)));
-            }
-
-            selectedPawn = new SelectedPawn(parseInt(lign), parseInt(column));
-
             unSelecteAll();
-            changeClassAndColor(id_case, "not_selected", "is_selected", 'red');
+            var pawn = engine.getPiece2D(lign, column);
+            if (pawn === engine.getCurrentPlayer())
+            {
+                selectedPawn = new SelectedPawn(lign, column);
+                selectCase(lign, column, "red");
+
+                var startStroke = engine.coordToStroke(lign, column);
+                var possibleStrokes = engine.possibleStroke();
+                var human = new Breakthrough.Human();
+                currentPossibleStrokes = human.chooseStroke(possibleStrokes, startStroke);
+
+                for(var i = 0; i < currentPossibleStrokes.length; i++)
+                {
+                    var coords = engine.strokeToCoord(currentPossibleStrokes[i]);
+                    selectCase(coords[2], coords[3], "green");
+                }
+            }
+            else if (selectedPawn !== null)
+            {
+                for(var i = 0; i < currentPossibleStrokes.length; i++)
+                {
+                    var coords = engine.strokeToCoord(currentPossibleStrokes[i]);
+                    if (coords[2] === lign, coords[3] === column)
+                    {
+                        hasHumanChooseStroke = true;
+                        choosenStroke = engine.coordToStroke(lign, column);
+                        break;
+                    }
+                }
+                //movePawn(selectedPawn, new SelectedPawn(parseInt(lign), parseInt(column)));
+            }
         }
         else if($(id_case).hasClass('is_selected')){
             selectedPawn = null;
-            changeClassAndColor(id_case, "is_selected", "not_selected", $(id_case).attr('color'));
+            unSelecteAll();
+            //changeClassAndColor(id_case, "is_selected", "not_selected", $(id_case).attr('color'));
         }
 
-
-
     });
+
+    this.getCurrentPlayer = function()
+    {
+        return engine.getCurrentPlayer();
+    };
+
+    var getHumanChoosenStroke = function(player)
+    {
+        var timeOut = false;
+        while(!hasHumanChooseStroke)
+        {
+           sleep(50);
+        }
+
+        if (timeOut)
+            return null;
+
+        return choosenStroke;
+    };
+
+    this.startGame = function (vsIa)
+    {
+        var possiblesStroke;
+        var strokeChoose;
+        var player1 = new Breakthrough.Human();
+        var player2;
+
+        if (vsIa)
+        {
+            player2 = new Breakthrough.Random();
+        }
+        else
+        {
+            player2 = new Breakthrough.Human();
+        }
+
+        var gameLife = 0;
+        while ( gameLife !== 1){
+
+            possiblesStroke = engine.possibleStroke();
+            strokeChoose = randomIa.randomChooseStroke(possiblesStroke);
+            engine.majBoard(strokeChoose);
+
+            newEngine.displayGameBoard();
+            if (newEngine.currentPlayerWin() !== Breakthrough.Piece.EMPTY){
+                gameLife = 1;
+                newEngine.displayGameBoard();
+                console.log("Joueur " + newEngine.getCurrentPlayer() + " win !");
+            } else {
+                newEngine.nextPlayer();
+                console.log("Turn of player " + newEngine.getCurrentPlayer());
+            }
+        }
+    };
 
     var movePawn = function(from, to)
     {
@@ -94,14 +172,20 @@ Breakthrough.Plateau = function() {
 
         var src = getSourceFromPawn(engine.getPiece2D(from.lign, from.column));
 
-        if(src !== "none" && pawnTo === Breakthrough.Piece.EMPTY)
+        if(src !== "none")
         {
             $(idFrom).find('img:first').remove();
             $(idTo).find('a:first').html("<img src='../interface/img/" + src + "' height='" + square_dim + "px' width='" + square_dim + "px;'>");
 
             engine.setPiece2D(from.lign, from.column, Breakthrough.Piece.EMPTY);
-            engine.setPiece2D(to.lign, to.lign, pawnFrom);
+            engine.setPiece2D(to.lign, to.column, pawnFrom);
+
+            unSelecteAll();
+
+            return true;
         }
+
+        return false;
     };
 
     function SelectedPawn(lign,column) {
@@ -136,6 +220,11 @@ Breakthrough.Plateau = function() {
         });
     };
 
+    var selectCase = function (ligne, column, color) {
+        var id_case = "#l" + ligne + "c" + column;
+        changeClassAndColor(id_case, "not_selected", "is_selected", color);
+    };
+
     var changeClassAndColor = function(id_case, class1, class2, color)
     {
         var my_class= $(id_case).attr('class');
@@ -145,5 +234,15 @@ Breakthrough.Plateau = function() {
 
         $(id_case).attr("class", my_class);
         $(id_case).css({'background-color' : color });
+    };
+
+    var sleep = function(milliseconds)
+    {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds){
+                break;
+            }
+        }
     };
 };

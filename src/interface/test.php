@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script type="text/javascript" src="../Javascript/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../Javascript/Breakthrough.js"></script>
+    <script type="text/javascript" src="../Javascript/Stroke.js"></script>
+    <script type="text/javascript" src="../Javascript/Human.js"></script>
     <script type="text/javascript" src="../Javascript/Engine.js"></script>
     <script type="text/javascript" src="../Javascript/Plateau.js"></script>
 

@@ -1,6 +1,6 @@
 "use strict"
 
-Breakthrough.Human = function () {
+Breakthrough.Human = function (isIa, color) {
     this.chooseStroke = function (possibleStroke, startStroke) {
         var possibleEndStroke = [];
         for ( var indexStroke = 0;  indexStroke < possibleStroke.length ; indexStroke++){
