@@ -92,23 +92,26 @@ Breakthrough.Plateau = function() {
                 }
             }
             else if($(id_case).hasClass('is_selected')){
-                if (selectedPawn !== null && currentPossibleStrokes !== null && currentPossibleStrokes.length > 0)
+                if (selectedPawn !== null && !(selectedPawn.column === column && selectedPawn.lign === lign))
                 {
-                    for(var i = 0; i < currentPossibleStrokes.length; i++)
+                    if (currentPossibleStrokes !== null && currentPossibleStrokes.length > 0)
                     {
-                        var coords = engine.strokeToCoord(currentPossibleStrokes[i]);
-                        if (coords[2] === lign, coords[3] === column)
+                        for(var i = 0; i < currentPossibleStrokes.length; i++)
                         {
-                            hasHumanChooseStroke = true;
-                            var from = selectedPawn;
-                            var to = new SelectedPawn(lign, column);
+                            var coords = engine.strokeToCoord(currentPossibleStrokes[i]);
+                            if (coords[2] === lign, coords[3] === column)
+                            {
+                                hasHumanChooseStroke = true;
+                                var from = selectedPawn;
+                                var to = new SelectedPawn(lign, column);
 
-                            movePawn(from, to);
+                                movePawn(from, to);
 
-                            engine.majBoard(currentPossibleStrokes[i]);
+                                engine.majBoard(currentPossibleStrokes[i]);
 
-                            play();
-                            break;
+                                play();
+                                break;
+                            }
                         }
                     }
                 }
@@ -132,6 +135,11 @@ Breakthrough.Plateau = function() {
         engine.initializePlayer(p1, p2);
 
         play();
+    };
+
+    this.abandon = function()
+    {
+        
     };
 
     var play = function()
