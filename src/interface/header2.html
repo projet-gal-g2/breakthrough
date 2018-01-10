@@ -1,13 +1,32 @@
 
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+
 <h1><span>BREAKTHROUGH</span></h1>
 <div align="center">
 	<ul id="menu" >
-	<li><a href="test.php">Acceuil</a>
+	<li><a href="acceuil.php">Acceuil</a>
 	</li><li><a href="#">Profil &#x25bc;</a>
 		<ul>
 			<li><a href="#">Mon Profil</a></li>
 			<li><a href="#">Mes Statistiques</a></li>
 		</ul>
-	</li><li><a href="#">Déconnexion</a>
+	</li><li><a href="acceuil.php" id="deco" ?>>Déconnexion</a>
 </ul>
 </div>
+<script>
+
+
+    $(document).on("click","#deco",function() {
+        $.ajax({
+            type: 'POST',
+            url: 'deco_maj.php',
+            data:{},
+			success:
+				function(data){
+					alert(data);
+				}
+        });
+    });
+
+
+</script>
