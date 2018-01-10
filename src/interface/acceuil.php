@@ -11,9 +11,8 @@
 		
 </head>
 <body>
-	
-	<?php include "header.html"; ?>
 
+	<?php include "header.html"; ?>
 	
 	<div class="container">
 
@@ -24,7 +23,7 @@
 				<p>Ut enim ad..</p>
 			</div>
 			<div class="col-sm-4 col-md-5 col-lg-6 intro mini_intro">
-				<h3>LeaderBoard</h3>
+				<?php include "leader_board.php" ;?>
 			</div>
 			<div class="col-sm-8 col-md-10 col-lg-12 intro">    
 				<h3>Règles</h3><br>

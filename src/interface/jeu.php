@@ -112,6 +112,14 @@
 </style>
  <body>
 <?php include "header2.html"; ?>
+		<?php
+		session_start();
+		echo "pseudo est : ".$_SESSION["pseudo"];
+		if(!isset($_SESSION["pseudo"])){
+			header("location: acceuil.php");
+		}
+	
+	?>
 
 <div class = "abandonner">
  <button type="button" align="middle-right" class="btn btn-danger">Abandonner</button>
