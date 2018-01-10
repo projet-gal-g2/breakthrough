@@ -23,8 +23,8 @@
 					<button class="button">Jouer</button>
 				</div>
 			</div>
-			<div class="col-lg-offset-4 col-lg-3  centre intro mini_intro">
-				<h3>LeaderBoard</h3>
+			<div class="col-lg-offset-4 col-lg-3  centre mini_intro">
+				<?php include "leader_board.php" ?>
 			</div>
 		</div>
 	</div>	
