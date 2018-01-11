@@ -145,7 +145,6 @@
     $tab_j1=$bdd->query('select id_usr,pseudo from utilisateur where id_usr ="'.$tab_partie['joueur1'].'"')->fetch();
     $tab_j2=$bdd->query('select id_usr,pseudo from utilisateur where id_usr ="'.$tab_partie['joueur2'].'"')->fetch();
 
-
     $_POST['pseudo1']=$tab_j1['pseudo'];
     $_POST['pseudo2']=$tab_j2['pseudo'];
     $_POST['idGame'] = $id_game;

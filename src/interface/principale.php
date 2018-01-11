@@ -22,8 +22,7 @@
 	$lock=0;
 	if($lock==0){
 	if(count($_POST) >2){
-		$ajout_commande=$bdd->prepare('insert into utilisateur(nom,prenom,pseudo,mdp,en_ligne)
-		VALUES(:nom,:prenom,:pseudo,:mdp,:en_ligne)');
+		$ajout_commande=$bdd->prepare('insert into utilisateur(nom,prenom,pseudo,mdp,en_ligne) VALUES(:nom,:prenom,:pseudo,:mdp,:en_ligne)');
 		$ajout_commande->execute(array(
 							'nom'=>$_POST['name'],
 							'prenom'=>$_POST['prenom'],
@@ -77,7 +76,7 @@
 </body>
 <script>
 	var cpt=0;
-$(document).on("click","#button_jouer",function(){
+    $(document).on("click","#button_jouer",function(){
 	if(cpt==0){
 		$.ajax({
 				type: 'POST',

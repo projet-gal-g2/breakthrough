@@ -17,6 +17,8 @@
     							'type'=>$_POST['type']
     							));
     $id_game=$bdd->query('SELECT max(id_partie) as id FROM partie')->fetch()['id'];
+
+
     session_start();
     $_SESSION['idGame'] = $id_game;
 
