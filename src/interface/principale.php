@@ -16,7 +16,7 @@
 <body>
 
 
-	<?php include "connect_pdo.php"; ?>
+	<?php include "../bdd/connect_pdo.php"; ?>
 	<?php
 	session_start();
 	$lock=0;

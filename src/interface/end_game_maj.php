@@ -2,7 +2,7 @@
 
 session_start();
 
-<?php include "connect_pdo.php"; ?>
+include "../bdd/connect_pdo.php";
 
 $idGame = $_POST['idGame'];
 $idLooser = $_POST['idLooser'];
