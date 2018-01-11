@@ -141,34 +141,46 @@ BreakthroughTestCase.prototype.testStrokeToCoord = function () {
 // Test IA alpha beta
 BreakthroughTestCase.prototype.testIAAlpha = function () {
     var newEngine = new Breakthrough.Engine();
-    var p2 = new Breakthrough.Player(Breakthrough.Piece.WHITE, true, "ia", -1);
-    var p1 = new Breakthrough.Player(Breakthrough.Piece.BLACK, false, "player", 0);
+    var p2 = new Breakthrough.Player(Breakthrough.Piece.BLACK, true, "ia", -1);
+    var p1 = new Breakthrough.Player(Breakthrough.Piece.WHITE, false, "player", 0);
+    var possibleStroke = [];
     var alpha = new Breakthrough.AlphaBeta(newEngine);
-    var humanPossibleStroke;
-    var choiceStroke = [];
+    var countMaxStroke =0;
+
     newEngine.initialisation();
     newEngine.initializePlayer(p1, p2);
 
-    var gameBoard = newEngine.getGameBoard();
-    humanPossibleStroke = newEngine.possibleStroke();
-    var currentPlayer = newEngine.getCurrentPlayer();
+    var gamelife = 0;
 
-    for (var i = 0; i<1; i++){
-        if (currentPlayer.isIA()) {
-
-            newEngine.displayGameBoard();
-            newEngine.majBoard(alpha.moveStroke());
+    while (gamelife !== 1){
+        if (newEngine.getCurrentPlayer().isIA()) {
+            var tabCopyEngine = newEngine.clone();
+            var copyEngine = new Breakthrough.Engine();
+            copyEngine.setBoard(tabCopyEngine[0]);
+            copyEngine.setCurrentPlayer(tabCopyEngine[1]);
+            copyEngine.setOpposingPlayer(tabCopyEngine[2]);
+            copyEngine.setPlayer1(tabCopyEngine[3]);
+            copyEngine.setPlayer2(tabCopyEngine[4]);
+            var bestChooseStroke = alpha.moveStroke(copyEngine);
+            newEngine.majBoard(bestChooseStroke);
+            //console.log("Choix de l'i.a alpha");
+            countMaxStroke += alpha.getCounterStroke();
+            //console.log("Nombre de coups simulés ce tour : " + alpha.getCounterStroke());
             //newEngine.displayGameBoard();
-            console.log(currentPlayer);
-           newEngine.nextPlayer();
-           console.log(currentPlayer);
+            newEngine.nextPlayer();
         } else {
-            console.log("passe");
-            choiceStroke = newEngine.getPossibleStroke(humanPossibleStroke);
-            console.log(choiceStroke);
+            //console.log("Human");
+            possibleStroke = newEngine.possibleStroke();
+            newEngine.majBoard(newEngine.randomChooseStroke(possibleStroke));
+            //console.log("Choix de l'humain");
             //newEngine.displayGameBoard();
-           // newEngine.nextPlayer();
+            newEngine.nextPlayer();
+        }
+        if( newEngine.currentPlayerWin() !== null ){
+            console.log(newEngine.getOpposingPlayer());
+            gamelife = 1;
         }
     }
-
+    newEngine.displayGameBoard();
+    console.log("Nombre de coup max simulés : " + countMaxStroke);
 };

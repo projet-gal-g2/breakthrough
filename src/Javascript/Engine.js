@@ -47,6 +47,14 @@ Breakthrough.Engine = function () {
     this.setPlayer2 = function (player){
         player2 = player;
     };
+
+    this.getPlayer1 = function () {
+        return player1;
+    };
+
+    this.getPlayer2 = function (){
+        return player2;
+    };
 	this.initialisation = function () {
 		var lastTwoLines = Breakthrough.SIZEBOARD - (Breakthrough.ONE_LINE*2);
 		// Parcours des deux premières lignes
@@ -69,9 +77,10 @@ Breakthrough.Engine = function () {
         player1 = p1;
         player2 = p2;
 
-        currentPlayer = player2;
-        opposingPlayer = player1;
-    }
+        currentPlayer = player1;
+        opposingPlayer = player2;
+
+    };
 
 	this.displayGameBoard = function () {
         var stringGameBoard ='\n';

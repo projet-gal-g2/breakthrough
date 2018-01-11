@@ -1,26 +1,29 @@
 "use strict"
 
-Breakthrough.AlphaBeta = function (engine, realGameBoard) {
-    var engineGame = engine;
-    var gameBoard = realGameBoard;
+Breakthrough.AlphaBeta = function () {
     var bestStrokeChoose;
+    var counterStrokeSimulate = 0;
 
-    this.evalBoard = function(gameBoard){
+    this.getCounterStroke = function () {
+        return counterStrokeSimulate;
+    };
+
+    this.evalBoard = function(engineCopy){
         var sum = 0;
-        if(engineGame.getCurrentPlayer() === engineGame.currentPlayerWin()){
-            return 1000;
+        if(engineCopy.getCurrentPlayer() === engineCopy.currentPlayerWin()){
+            return 10000;
         }
 
-        if(engineGame.getOpposingPlayer() === engineGame.currentPlayerWin()){
-            return -1000;
+        if(engineCopy.getOpposingPlayer() === engineCopy.currentPlayerWin()){
+            return -10000;
         }
 
         for (var lineSquare = 0; lineSquare < Breakthrough.ONE_LINE; lineSquare++){
             for (var columnSquare = 0; columnSquare < Breakthrough.ONE_LINE; columnSquare++){
-                if ( engineGame.getPiece2D(lineSquare, columnSquare) === engineGame.getCurrentPlayer().getColorPlayer()){
+                if ( engineCopy.getPiece2D(lineSquare, columnSquare) === engineCopy.getCurrentPlayer().getColorPlayer()){
                     sum += 10;
                 } else {
-                    if (engineGame.getPiece2D(lineSquare, columnSquare) === engineGame.getOpposingPlayer().getColorPlayer()){
+                    if (engineCopy.getPiece2D(lineSquare, columnSquare) === engineCopy.getOpposingPlayer().getColorPlayer()){
                         sum -= 10;
                     }
                 }
@@ -36,14 +39,14 @@ Breakthrough.AlphaBeta = function (engine, realGameBoard) {
         coefsBoard[6] = [20,28,28,28,28,28,28,20];
         coefsBoard[7] = [36,36,36,36,36,36,36,36];
 
-        var coefPion = Breakthrough.Piece.BLACK === engineGame.getCurrentPlayer().getColorPlayer() ? 1 : -1;
+        var coefPion = Breakthrough.Piece.BLACK === engineCopy.getCurrentPlayer().getColorPlayer() ? 1 : -1;
 
         for (var line = 0; line < Breakthrough.ONE_LINE; line++){
             for ( var column = 0; column < Breakthrough.ONE_LINE; column++ ){
-                if (engine.getPiece2D(line, column)=== Breakthrough.Piece.BLACK ){
+                if (engineCopy.getPiece2D(line, column)=== Breakthrough.Piece.BLACK ){
                     sum += coefsBoard[line][column] * coefPion;
                 } else {
-                    if (engine.getPiece2D(line, column)=== Breakthrough.Piece.WHITE){
+                    if (engineCopy.getPiece2D(line, column)=== Breakthrough.Piece.WHITE){
                         sum -= coefsBoard[7-line][column] * coefPion;
                     }
                 }
@@ -52,26 +55,28 @@ Breakthrough.AlphaBeta = function (engine, realGameBoard) {
         return sum;
     };
 
-    this.getMoveAlphaBeta = function (depthMax, alpha, beta ){
-        if (engineGame.currentPlayerWin() !== null || depthMax <= 0){
-            return this.evalBoard(gameBoard);
+    this.getMoveAlphaBeta = function (copyEngine,depthMax, alpha, beta ){
+        if (copyEngine.currentPlayerWin() !== null || depthMax <= 0){
+            return this.evalBoard(copyEngine);
         }
 
         var valueSimulate;
         var bestStroke;
-        var possibleStroke = engineGame.possibleStroke();
+        var possibleStroke = copyEngine.possibleStroke();
 
         for (var index = 0; index < possibleStroke.length; index++){
-            var tabCopyEngine = engineGame.clone();
-            var copyEngine = new Breakthrough.Engine();
-            copyEngine.setBoard(tabCopyEngine[0]);
-            copyEngine.setCurrentPlayer(tabCopyEngine[1]);
-            copyEngine.setOpposingPlayer(tabCopyEngine[2]);
-            copyEngine.setPlayer1(tabCopyEngine[3]);
-            copyEngine.setPlayer2(tabCopyEngine[4]);
-            copyEngine.majBoard(possibleStroke[index]);
-           // copyEngine.nextPlayer();
-            valueSimulate = -this.getMoveAlphaBeta(depthMax-1, -beta, -alpha);
+            var tabCopyEngine = copyEngine.clone();
+            var newCopyEngine = new Breakthrough.Engine();
+            newCopyEngine.setBoard(tabCopyEngine[0]);
+            newCopyEngine.setCurrentPlayer(tabCopyEngine[1]);
+            newCopyEngine.setOpposingPlayer(tabCopyEngine[2]);
+            newCopyEngine.setPlayer1(tabCopyEngine[3]);
+            newCopyEngine.setPlayer2(tabCopyEngine[4]);
+            newCopyEngine.majBoard(possibleStroke[index]);
+            counterStrokeSimulate++;
+           // newCopyEngine.displayGameBoard();
+            newCopyEngine.nextPlayer();
+            valueSimulate = -this.getMoveAlphaBeta(newCopyEngine,depthMax-1, -beta, -alpha);
             if (valueSimulate > alpha ){
                 alpha = valueSimulate;
                 bestStroke = possibleStroke[index];
@@ -83,8 +88,8 @@ Breakthrough.AlphaBeta = function (engine, realGameBoard) {
          bestStrokeChoose = bestStroke;
         return alpha;
     };
-    this.moveStroke = function () {
-        this.getMoveAlphaBeta(3,-10000, 10000 );
+    this.moveStroke = function (copyEngine) {
+        this.getMoveAlphaBeta(copyEngine, 4,-10000, 10000 );
         return bestStrokeChoose;
     };
 };
