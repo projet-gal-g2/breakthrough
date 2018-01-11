@@ -116,11 +116,11 @@ height:50px;
 	width: 150px;
 	padding: 6px 15px;
 	background-color: #3B5998;
-	background-image: linear-gradient(#3B5998, #3B5998 50%, #3B5998 50%,#3B5998);
+	background-image: linear-gradient(#582900, #582900 50%, #582900 50%,#582900);
 }
 #menu > li li { background: transparent none; }
 #menu > li li a { color: #fff; }
-#menu > li li:hover { background:#1773b5; }
+#menu > li li:hover { background:#582900; }
 #menu > li:first-child {
 	border-right: 1px solid #777;
 	border-radius: 8px 0 0 8px;
@@ -131,12 +131,12 @@ height:50px;
 }
 #menu > li:last-child {
 	border-right: 0;
-	border-left: 1px solid #007bb5;
+	border-left: 1px solid #582900;
 	border-radius: 0 8px 8px 0 ;
 }
 #menu > li:hover {
-	background-color: #007bb5;
-	background-image: linear-gradient(#3B5998, #3B5998 50%, #3B5998 50%,#3B5998);
+	background-color: #582900;
+	background-image: linear-gradient(#5e2e04, #5e2e04 50%, #5e2e04 50%,#5e2e04);
 }
 /* (presque) fin de la partie positionnement/déco */
 /* dans cette déclaration, on fixe le max-height */
@@ -145,8 +145,8 @@ height:50px;
 	top: 2em; left: 0;
 	max-height:0em;	
 	margin: 0; padding: 0;
-	background-color: #007bb5;
-	background-image: linear-gradient(#3B5998,#005B93);
+	background-color:#582900;
+	background-image: linear-gradient(#5e2e04,#5e2e04);
 	overflow: hidden;
 	transition: 1s max-height 0.3s;
 	border-radius: 0 0 8px 8px;
@@ -158,39 +158,39 @@ height:50px;
 }
 h1{
 text-align:center;
-background:linear-gradient (
+background:linear-gradient(
 #fff 0%,
 #fff 45%,
-#7c8d07 46%,
-#7c8d07 54%, 
+#582900 46%,
+#582900 54%, 
 #fff 54%,
 #fff 100%);
 background:-webkit-linear-gradient(
 #fff 0%,
 #fff 45%,
-#7c8d07 46%,
-#7c8d07 54%, 
+#582900 46%,
+#582900 54%, 
 #fff 54%,
 #fff 100%);
 background:    -moz-linear-gradient(
 #fff 0%,
 #fff 45%,
-#7c8d07 46%,
-#7c8d07 54%, 
+#582900 46%,
+#582900 54%, 
 #fff 54%,
 #fff 100%);
 background:     -ms-linear-gradient(
 #fff 0%,
 #fff 45%,
-#7c8d07 46%,
-#7c8d07 54%, 
+#582900 46%,
+#582900 54%, 
 #fff 54%,
 #fff 100%);
 background:      -o-linear-gradient(
 #fff 0%,
 #fff 45%,
-#7c8d07 46%,
-#7c8d07 54%, 
+#582900 46%,
+#582900 54%,  
 #fff 54%,
 #fff 100%);
 }

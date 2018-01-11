@@ -5,6 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
  </head>
+
  <?php include "header.html"; ?>
 <form method="post" action="traitement.php">
 	<fieldset>
@@ -18,6 +19,9 @@
 			
 			<input type="submit" value="Connexion" />
 	</fieldset>
+	    <div class="checkbox">
+      <label><input type="checkbox" name="remember"> Remember me</label>
+    </div>
 	
 	
 	
