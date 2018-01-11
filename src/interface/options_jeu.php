@@ -11,7 +11,7 @@
 	</td>
 </tr>
 <tr>
-	<td class="button3" id="vsIa" pseudo="<?php  ?>" idPlayer="<?php  ?>">
+	<td class="button3" id="vsIa" pseudo="<?php session_start();echo $_SESSION['pseudo'];?>">
 		Joueur vs IA
 	</td>
 </tr>
@@ -19,29 +19,23 @@
 
 <script>
 $(document).on("click", "#vsIa", function(){
-    var random = Math.floor(Math.random() * Math.floor(1));
+    var random = Math.floor(Math.random() * Math.floor(2));
     var pseudo1;
     var pseudo2;
     var idGame;
-    var idj1;
-    var idj2;
 
     switch(random)
     {
         case 0:
             pseudo1 = "IA";
-            idj1 = -1;
-
             pseudo2 = $("#vsIa").attr("pseudo");
-            idj2 = parseInt($("#vsIa").attr("idPlayer"));
+
             break;
 
         case 1:
             pseudo2 = "IA";
-            idj2 = -1;
-
             pseudo1 = $("#vsIa").attr("pseudo");
-            idj1 = parseInt($("#vsIa").attr("idPlayer"));
+
             break;
     }
 
@@ -50,16 +44,40 @@ $(document).on("click", "#vsIa", function(){
     $.ajax(
     {
         type: "POST",
-        url: "jeu.php",
+        url: "creation_partie.php",
         data:
             {
                 "pseudo1": pseudo1,
                 "pseudo2": pseudo2,
-                "idGame": idGame,
-                "idj1": idj1,
-                "idj2": idj2
+                "type": 0
             },
-        success: function(data) {}
+        success: function(data) { document.location.href="jeu.php"; }
     });
+});
+
+$(document).on("click", "#pvp", function(){
+    var random = Math.floor(Math.random() * Math.floor(1));
+    var pseudo1;
+    var pseudo2;
+    var idGame;
+
+    switch(random)
+    {
+        case 0:
+            pseudo1 = "IA";
+            pseudo2 = $("#vsIa").attr("pseudo");
+
+            break;
+
+        case 1:
+            pseudo2 = "IA";
+            pseudo1 = $("#vsIa").attr("pseudo");
+
+            break;
+    }
+
+
+
+
 });
 </script>

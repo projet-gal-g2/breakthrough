@@ -125,8 +125,11 @@
 }
 </style>
  <body>
+ <div style="position:fixed;left:0px;bottom:50%;" id="profile_container"></div>
 <?php include "header2.html"; ?>
 <?php
+    include "../bdd/connect_pdo.php";
+
 	session_start();
 	echo "pseudo est : ".$_SESSION["pseudo"];
 	/*
@@ -135,21 +138,31 @@
 	}
 	*/
 
-    $_POST['pseudo1']="IA";
-    $_POST['pseudo2']="le_bagnard";
-    $_POST['idGame'] = 1;
-    $_POST['idj1'] = -1;
-    $_POST['idj2'] = 1;
+    $id_game = $_SESSION['idGame'];
+    $sql='select * from partie where id_partie='.$id_game;
+    $tab_partie=$bdd->query($sql)->fetch();
+
+    $tab_j1=$bdd->query('select id_usr,pseudo from utilisateur where id_usr ="'.$tab_partie['joueur1'].'"')->fetch();
+    $tab_j2=$bdd->query('select id_usr,pseudo from utilisateur where id_usr ="'.$tab_partie['joueur2'].'"')->fetch();
+
+
+    $_POST['pseudo1']=$tab_j1['pseudo'];
+    $_POST['pseudo2']=$tab_j2['pseudo'];
+    $_POST['idGame'] = $id_game;
+    $_POST['idj1'] = $tab_j1['id_usr'];
+    $_POST['idj2'] = $tab_j2['id_usr'];
+
+
 
 ?>
 <div class="container">
 
 		<div class="row" style=" margin-top:50px" > 
 			<div class="col-sm-1 col-md-2 col-lg-3 intro mini_intro taille400" pseudo=<?php echo $_POST['pseudo1'];?> id=<?php echo $_POST['idj1'];?>>
-				<div class="row joueur1" pseudo=<?php echo $_POST['pseudo1'];?> id=<?php echo $_POST['idj1'];?>>
+				<div class="row joueur1 pseudo_joueur" pseudo=<?php echo $_POST['pseudo1'];?> id=<?php echo $_POST['idj1'];?>>
 					<p align="left">Joueur1 : <?php echo $_POST['pseudo1'];?></p>
 				</div>
-				<div class="row joueur2" pseudo=<?php echo $_POST['pseudo2'];?> id=<?php echo $_POST['idj2'];?>>
+				<div class="row joueur2 pseudo_joueur" pseudo=<?php echo $_POST['pseudo2'];?> id=<?php echo $_POST['idj2'];?>>
 					<p align="left">Joueur2 : <?php echo $_POST['pseudo2'];?></p>
 				</div>
 			</div>
@@ -191,7 +204,6 @@ La partie se termine si un joueur atteint la rangée de départ de l'adversaire.
   </div>
 </div>
 
-
 <script>
 
 var plateau = new Breakthrough.Plateau();
@@ -200,8 +212,11 @@ var pseudo2 = $(".joueur2").attr("pseudo");
 var idj1 = parseInt($(".joueur1").attr("id"));
 var idj2 = parseInt($(".joueur2").attr("id"));
 
-var player1 = new Breakthrough.Player(Breakthrough.Piece.WHITE, true, pseudo1, idj1);
-var player2 = new Breakthrough.Player(Breakthrough.Piece.BLACK, false, pseudo2, idj2);
+var isP1Ia = (idj1 === -1);
+var isP2Ia = (idj2 === -1);
+
+var player1 = new Breakthrough.Player(Breakthrough.Piece.WHITE, isP1Ia, pseudo1, idj1);
+var player2 = new Breakthrough.Player(Breakthrough.Piece.BLACK, isP2Ia, pseudo2, idj2);
 
 plateau.startGame(player1, player2);
 
@@ -239,6 +254,21 @@ window.onclick = function(event) {
         modal4.style.display = "none";
     }
 }
+
+$(".pseudo_joueur").mouseover(function(){
+    $.ajax({
+    				type: 'POST',
+    				url: 'profil_hover.php',
+    				data:{pseudo:$(this).attr("pseudo")},
+    				success:
+    					function(data){
+    						$("#profile_container").html(data);
+    						$("#profile_container").css('border-radius','10px');
+    						$("#profile_container").css('border-style','groove');
+    						$("#profile_container").css('border-width','thick');
+    					}
+    			});
+});
 
 
 

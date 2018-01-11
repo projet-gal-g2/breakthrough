@@ -175,7 +175,10 @@ Breakthrough.Plateau = function() {
                         "addScoreWinner": 10,
                         "addScoreLooser": -1
                     },
-                success: function(data) {}
+                success: function(data) {
+                    alert("Le joueur " + engine.getOpposingPlayer().getPseudo() + " a gagné !");
+                    document.location.href = "principale.php";
+                }
             });
     };
 
@@ -222,7 +225,6 @@ Breakthrough.Plateau = function() {
     var gameWin = function()
     {
         isEndGame = true;
-        console.log("le joueur : " + engine.currentPlayerWin().getColorPlayer() + " a gagné !");
 
         if (intervalId !== null)
         {
@@ -245,8 +247,12 @@ Breakthrough.Plateau = function() {
                         "addScoreWinner": 10,
                         "addScoreLooser": 1
                     },
-                success: function(data) {}
+                success: function(data) {
+                    alert("Le joueur " + engine.currentPlayerWin().getPseudo() + " a gagné !");
+                    document.location.href = "principale.php";
+                }
             });
+
 
     };
 
