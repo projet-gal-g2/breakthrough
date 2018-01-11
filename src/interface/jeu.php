@@ -118,31 +118,36 @@
 </style>
  <body>
 <?php include "header2.html"; ?>
-		<?php
-		session_start();
+<?php
+	session_start();
 		echo "pseudo est : ".$_SESSION["pseudo"];
 		if(!isset($_SESSION["pseudo"])){
 			header("location: acceuil.php");
-		}
-	
-	?>
+	}
+    $_POST['pseudo1']="IA";
+    $_POST['pseudo2']="le_bagnard";
+    $_POST['idGame'] = 1;
+    $_POST['idj1'] = -1;
+    $_POST['idj2'] = 1;
 
+?>
 <div class = "abandonner">
  <button type="button" id="leave" align="middle-right" class="btn btn-danger">Abandonner</button>
 </div>
 <div class="time">
-  <p align="left">Time :</p>
+  <p id="timer" align="left">Time :</p>
 </div>
-<div class="joueur1">
-  <p align="left">Joueur1 :</p>
+<div class="joueur1" pseudo=<?php echo $_POST['pseudo1'];?> id=<?php echo $_POST['idj1'];?>>
+  <p align="left">Joueur1 : <?php echo $_POST['pseudo1'];?></p>
 </div>
-<div class="joueur2">
-  <p align="left">Joueur2 :</p>
+<div class="joueur2" pseudo=<?php echo $_POST['pseudo2'];?> id=<?php echo $_POST['idj2'];?>>
+  <p align="left">Joueur2 : <?php echo $_POST['pseudo2'];?></p>
 </div>
 <div class="btregle"><button type="button" align="middle-right" class="btn btn-danger" id="myBtn">Règles</button> </div>
 
-<div id="pContainer" >
-
+<div class="gameContainer" id=<?php echo $_POST['idGame'];?>>
+    <div style="display: inline-block; width: 1px; vertical-align:middle; height=100%;"></div>
+    <div id="pContainer" style="display: inline-block; vertical-align:middle;"></div>
 </div>
 
 <!-- The Modal -->
@@ -173,8 +178,13 @@ La partie se termine si un joueur atteint la rangée de départ de l'adversaire.
 <script>
 
 var plateau = new Breakthrough.Plateau();
-var player1 = new Breakthrough.Player(Breakthrough.Piece.WHITE, true);
-var player2 = new Breakthrough.Player(Breakthrough.Piece.BLACK, false);
+var pseudo1 = $(".joueur1").attr("pseudo");
+var pseudo2 = $(".joueur2").attr("pseudo");
+var idj1 = parseInt($(".joueur1").attr("id"));
+var idj2 = parseInt($(".joueur2").attr("id"));
+
+var player1 = new Breakthrough.Player(Breakthrough.Piece.WHITE, true, pseudo1, idj1);
+var player2 = new Breakthrough.Player(Breakthrough.Piece.BLACK, false, pseudo2, idj2);
 
 plateau.startGame(player1, player2);
 

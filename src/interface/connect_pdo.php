@@ -9,6 +9,5 @@
         {
             die('Erreur : '.$e->getMessage());
         }
-       
     ?>
 

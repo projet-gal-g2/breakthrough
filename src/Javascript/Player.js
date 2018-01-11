@@ -1,13 +1,24 @@
 "use strict"
 
-Breakthrough.Player = function (colorPiece, isIA) {
-    var colorPlayer = colorPiece;
-    var isIA = isIA;
+Breakthrough.Player = function (cp, ia, p, id) {
+    var _colorPlayer = cp;
+    var _isIA = ia;
+    var _pseudo = p;
+    var _id = id;
 
     this.isIA = function (){
-        return isIA;
-    }
+        return _isIA;
+    };
+
     this.getColorPlayer = function () {
-        return colorPlayer;
-    }
+        return _colorPlayer;
+    };
+
+    this.getPseudo = function(){
+        return _pseudo;
+    };
+
+    this.getId = function(){
+        return _id;
+    };
 };
