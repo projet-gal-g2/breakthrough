@@ -91,7 +91,7 @@
 			</div>
 			<div class="modal-body" align="center">
 			<?php 
-			include "connect_pdo.php";
+			include "../bdd/connect_pdo.php";
 			$sql = 'select * from utilisateur where pseudo="'.$_SESSION['pseudo'].'"';
 			$res = $bdd->query($sql)->fetch();
 			echo '
