@@ -10,11 +10,16 @@
 	<script type="text/javascript" src="script2.js"></script>
 		
 </head>
+<style>
+.test{
+	border: solid black 1px;
+}
+</style>
 <body>
 
 	<?php include "header.html"; ?>
 	
-	<div class="container">
+	<div class="container test">
 
 		<div class="row"> 
 			 <div class="col-sm-4 col-md-5 col-lg-6 intro mini_intro">
@@ -34,7 +39,8 @@
 				<p>Les captures se font uniquement en diagonale. Une fois capturée, la pièce est retirée du plateau</p>
 			</div>
 		</div>
+				<div class="row" style="margin-top:20%;">
+				<?php include "footer.html"; ?>
+		</div>
 	</div>	
-<footer>
-<?php include "footer.html"; ?></footer>
-</body>
+
