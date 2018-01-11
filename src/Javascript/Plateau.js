@@ -224,6 +224,11 @@ Breakthrough.Plateau = function() {
         isEndGame = true;
         console.log("le joueur : " + engine.currentPlayerWin().getColorPlayer() + " a gagné !");
 
+        if (intervalId !== null)
+        {
+            window.clearInterval(intervalId);
+        }
+
         var idWinner = engine.currentPlayerWin().getId();
         var idLooser = engine.getOpposingPlayer().getId();
         var idGame = parseInt($(".gameContainer").attr("id"));
