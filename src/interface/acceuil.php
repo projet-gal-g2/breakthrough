@@ -19,8 +19,7 @@
 
 	<?php include "header.html"; ?>
 	
-	<div class="container test">
-
+	<div class="container">
 		<div class="row"> 
 			 <div class="col-sm-4 col-md-5 col-lg-6 intro mini_intro">
 				<h3>Vidéo</h3>

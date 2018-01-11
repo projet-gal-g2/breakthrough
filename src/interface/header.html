@@ -71,8 +71,16 @@
 <h1> <span> BREAKTHROUGH</span></h1>
 <div align="right">
 	<ul id="menu" >
-	<li><a  style="text-align:center" id="myBtn">Inscription</a>
-	</li><li><a style="text-align:center" id="myBtn2">Connexion</a>
+	
+	<?php 
+		session_start();
+		if(isset($_SESSION['pseudo'])){
+			echo '</li><li><a style="text-align:center" href="principale.php" >Page Principale</a></li>';
+		}else{
+			echo '<li><a  style="text-align:center" id="myBtn">Inscription</a>
+	</li><li><a style="text-align:center" id="myBtn2">Connexion</a>';
+		}
+	?>
 	<div id="myModal" class="modal">
 
   <!-- Modal content -->
