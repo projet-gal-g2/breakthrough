@@ -117,12 +117,13 @@
 }
 </style>
  <body>
- <?php
-
-
- ?>
 <?php include "header2.html"; ?>
 <?php
+	session_start();
+		echo "pseudo est : ".$_SESSION["pseudo"];
+		if(!isset($_SESSION["pseudo"])){
+			header("location: acceuil.php");
+	}
     $_POST['pseudo1']="IA";
     $_POST['pseudo2']="le_bagnard";
     $_POST['idGame'] = 1;

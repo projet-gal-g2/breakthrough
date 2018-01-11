@@ -6,7 +6,7 @@
 	</td>
 <?php
 	include "../bdd/connect_pdo.php";
-	$sql='select * from utilisateur order by score desc';
+	$sql='select * from utilisateur order by score desc limit 10';
 	$res=$bdd->query($sql);
 	$cpt=1;
 	while($data=$res->fetch()){
