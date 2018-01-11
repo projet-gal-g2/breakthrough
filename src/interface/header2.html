@@ -76,14 +76,14 @@
 	<li><a href="principale.php">Acceuil</a>
 	</li><li><a href="#">Profil &#x25bc;</a>
 		<ul>
-			<li><a href="#" id="myBtn3">Mon Profil</a></li>
+			<li><a href="#" id="myBtn">Mon Profil</a></li>
 			
 			<li><a href="#">Mes Statistiques</a></li>
 		</ul>
 	</li><li><a href="acceuil.php" id="deco" ?>Déconnexion</a>
 </ul>
 </div>
-<div id="myModal3" class="modal">
+<div id="myModal" class="modal">
 		<div class="modal-content">
 			<div class="modal-header" align="center">
 			<span class="close">&times;</span>
@@ -91,7 +91,7 @@
 			</div>
 			<div class="modal-body" align="center">
 			<?php 
-			include "connect_pdo.php";
+			include "../bdd/connect_pdo.php";
 			$sql = 'select * from utilisateur where pseudo="'.$_SESSION['pseudo'].'"';
 			$res = $bdd->query($sql)->fetch();
 			echo '
@@ -141,29 +141,20 @@
 
 </script>
 <script>
-// Get the modal
-var modal3 = document.getElementById('myModal3');
-
-// Get the button that opens the modal
-var btn3 = document.getElementById("myBtn3");
-// Get the <span> element that closes the modal
+var modal = document.getElementById('myModal');
+var btn = document.getElementById("myBtn");
 var span = document.getElementsByClassName("close")[0];
-// When the user clicks the button, open the modal 
-btn3.onclick = function() {
-    modal3.style.display = "block";
+btn.onclick = function() {
+    modal.style.display = "block";
 }
-
-
-// When the user clicks on <span> (x), close the modal
 span.onclick = function() {
-    modal3.style.display = "none";
+    modal.style.display = "none";
 }
-
-// When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
-        modal3.style.display = "none";
+        modal.style.display = "none";
     }
 }
+
 
 </script>
