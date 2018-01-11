@@ -38,7 +38,7 @@
 			$id = $data['id_usr'];
 			$sql ='update utilisateur set en_ligne=1 where id_usr='.$id;
 			$bdd->query($sql);
-			$_SESSION['pseudo']=$_POST['pseudo'];
+			$_SESSION['pseudo']=$data['pseudo'];
 			$lock=1;
 		}
 		else{

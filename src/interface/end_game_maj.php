@@ -16,6 +16,12 @@ $updateGame='update partie set winner='.$idWinner.', etat=1 where id_partie='.$i
 $updateWinner='update utilisateur set score='.$scoreWinner.' where id_usr='.$idWinner;
 $updateLooser='update utilisateur set score='.$scoreLooser.' where id_usr='.$idLooser;
 
+$updateJ1='update utilisateur set en_partie=0 where id_usr='.$idLooser;
+$updateJ2='update utilisateur set en_partie=0 where id_usr='.$idWinner;
+
+$bdd->query($updateJ1);
+$bdd->query($updateJ2);
+
 $bdd->query($updateGame);
 $bdd->query($updateWinner);
 $bdd->query($updateLooser);
