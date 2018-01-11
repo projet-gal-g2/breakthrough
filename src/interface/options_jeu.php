@@ -6,7 +6,7 @@
 	</td>
 </tr>
 <tr>
-	<td height=20% class="non_aff">
+	<td height=20% id="messageRecherche" class="non_aff">
 		
 	</td>
 </tr>
@@ -54,18 +54,18 @@ $(document).on("click", "#vsIa", function(){
 
 $(document).on("click", "#pvp", function(){
 
-    //document.write("en recherche de joueur ...");
+    $("#messageRecherche").html("en recherche de joueur ...");
     $.ajax(
         {
             type: "GET",
             url: "matchmaking.php",
             datatype: "text",
             success: function(data) {
-                var random = Math.floor(Math.random() * Math.floor(1));
+                var random = Math.floor(Math.random() * Math.floor(2));
                 var pseudo1;
                 var pseudo2;
                 var idGame;
-                alert(data);
+
                 switch(random)
                 {
                     case 0:
@@ -84,11 +84,12 @@ $(document).on("click", "#pvp", function(){
                 if (data === "gameFound")
                 {
                     document.location.href="jeu.php";
-                    console.write("partie déjà créée");
+                    $("#messageRecherche").html("Match trouvée !");
+                    console.log("partie déjà créée");
                 }
                 else
                 {
-                    console.write("adversaire trouvé");
+                    console.log("adversaire trouvé");
 
                     $.ajax(
                     {
@@ -101,7 +102,10 @@ $(document).on("click", "#pvp", function(){
                                 "pseudo2": pseudo2.trim(),
                                 "type": 1
                             },
-                        success: function(data) { document.location.href="jeu.php"; }
+                        success: function(data) { 
+                            $("#messageRecherche").html("Match trouvée !");
+                            document.location.href="jeu.php"; 
+                        }
                     });
                 }
 

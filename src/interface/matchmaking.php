@@ -11,14 +11,16 @@
     $opposenteName = $bdd->query('select pseudo from utilisateur where not pseudo LIKE "'.$_SESSION["pseudo"].'" and en_recherche=1')->fetch()['pseudo'];
 
     while(!isset($opposenteName) && !isset($idGame)){
-       $opposenteName = $bdd->query('select pseudo from utilisateur where not pseudo LIKE "'.$_SESSION["pseudo"].'" and en_recherche=1')->fetch()['pseudo'];
+        $opposenteName = $bdd->query('select pseudo from utilisateur where not pseudo LIKE "'.$_SESSION["pseudo"].'" and en_recherche=1')->fetch()['pseudo'];
+        $idGame = $bdd->query('select id_partie from partie where (joueur1='.$idPlayer.' or joueur2='.$idPlayer.') and etat=1') ->fetch()['id_partie'];
+        
         sleep(1);
     };
 
     $updatePlayer= 'update utilisateur set en_recherche=0 where pseudo LIKE "'.$_SESSION["pseudo"].'"';
     $bdd->query($updatePlayer);
 
-    if(isset($idGame))s
+    if(isset($idGame))
     {
         $_SESSION['idGame'] = $idGame;
         echo "gameFound";

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <html>
  <head>
   <title>Breackthrough</title>
@@ -130,13 +131,11 @@
 <?php
     include "../bdd/connect_pdo.php";
 
-	session_start();
 	echo "pseudo est : ".$_SESSION["pseudo"];
-	/*
+	
 	if(!isset($_SESSION["pseudo"])){
 		header("location: acceuil.php");
 	}
-	*/
 
     $id_game = $_SESSION['idGame'];
     $sql='select * from partie where id_partie='.$id_game;
@@ -154,7 +153,7 @@
 
 
 ?>
-<div class="container">
+<div class="container" id="mainContainer" gameId="<?php echo $_SESSION['idGame']; ?>" playerPseudo="<?php echo $_SESSION['pseudo']; ?>">
 
 		<div class="row" style=" margin-top:50px" > 
 			<div class="col-sm-1 col-md-2 col-lg-3 intro mini_intro taille400" pseudo=<?php echo $_POST['pseudo1'];?> id=<?php echo $_POST['idj1'];?>>

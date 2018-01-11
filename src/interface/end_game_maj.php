@@ -12,7 +12,7 @@ $addScoreLooser = $_POST['addScoreLooser'];
 $scoreLooser = $bdd->query('select score from utilisateur where id_usr='.$idLooser)->fetch()['score'] + $addScoreLooser;
 $scoreWinner = $bdd->query('select score from utilisateur where id_usr='.$idWinner)->fetch()['score'] + $addScoreWinner;
 
-$updateGame='update partie set winner='.$idWinner.', etat=1 where id_partie='.$idGame;
+$updateGame='update partie set winner='.$idWinner.', etat=0 where id_partie='.$idGame;
 $updateWinner='update utilisateur set score='.$scoreWinner.' where id_usr='.$idWinner;
 $updateLooser='update utilisateur set score='.$scoreLooser.' where id_usr='.$idLooser;
 
