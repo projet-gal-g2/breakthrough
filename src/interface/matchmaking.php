@@ -18,7 +18,7 @@
     $updatePlayer= 'update utilisateur set en_recherche=0 where pseudo LIKE "'.$_SESSION["pseudo"].'"';
     $bdd->query($updatePlayer);
 
-    if($idGame !== -1)
+    if(isset($idGame))s
     {
         $_SESSION['idGame'] = $idGame;
         echo "gameFound";
