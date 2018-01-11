@@ -21,4 +21,8 @@ Breakthrough.Player = function (cp, ia, p, id) {
     this.getId = function(){
         return _id;
     };
+
+    this.toString = function (){
+        return "( " +_colorPlayer + ", " + _isIA + ", " + _pseudo + ", " + _id + ")";
+    };
 };
