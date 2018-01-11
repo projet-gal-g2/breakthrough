@@ -25,9 +25,9 @@
 		$ajout_commande=$bdd->prepare('insert into utilisateur(nom,prenom,pseudo,mdp,en_ligne)
 		VALUES(:nom,:prenom,:pseudo,:mdp,:en_ligne)');
 		$ajout_commande->execute(array(
-							'nom'=>$_POST['pseudo'],
-							'prenom'=>$_POST['name'],
-							'pseudo'=>$_POST['prenom'],
+							'nom'=>$_POST['name'],
+							'prenom'=>$_POST['prenom'],
+							'pseudo'=>$_POST['pseudo'],
 							'mdp'=>$_POST['mdp'],
 							'en_ligne'=>1
 							));
