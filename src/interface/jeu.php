@@ -175,7 +175,7 @@
 				<div class="abandonner row">
 					<button type="button" id="leave" align="middle-right" class="btn btn-danger">Abandonner</button>
 				</div>
-				<div class="row btregle"><button type="button" align="middle-right" class="btn btn-danger" id="myBtn">Règles</button> </div>
+				<div class="row btregle"><button type="button" align="middle-right" class="btn btn-danger" id="myBtn4">Règles</button> </div>
 			</div>
 		</div>
 		<div class="row" style="margin-top:20%;">
@@ -183,10 +183,7 @@
 		</div>
 
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
+<div id="myModal4" class="modal">
   <div class="modal-content">
     <div class="modal-header">
       <span class="close">&times;</span>
@@ -195,18 +192,14 @@
     <div class="modal-body">
       <p><h2>Déplacements et capture des pièces</h2>
 
-Chaque joueur déplace une pièce par coup. Une pièce peut être déplacée d'une case vers l'avant, tout droit ou en diagonale, si la case d'arrivée est vide. Une pièce peut aussi être déplacée vers une case occupée par une pièce adverse, si la case d'arrivée se trouve à une case en diagonale et en avant. Le diagramme suivant montre une situation où:
-
-</p>
+Chaque joueur déplace une pièce par coup. Une pièce peut être déplacée d'une case vers l'avant, tout droit ou en diagonale, si la case d'arrivée est vide. Une pièce peut aussi être déplacée vers une case occupée par une pièce adverse, si la case d'arrivée se trouve à une case en diagonale et en avant. Le diagramme suivant montre une situation où:</p>
       <p><h2>Fin de la partie</h2>
-
 La partie se termine si un joueur atteint la rangée de départ de l'adversaire. Le diagramme suivant montre un exemple de coup gagnant de noir:</p>
 <p><h2>Autre règles importantes</h2>
 
     Les prises ne sont pas obligatoires. Même si un joueur peut capturer une pièce adverse, il peut choisir n'importe quel autre coup légal à la place. </p>
     </div>
   </div>
-
 </div>
 
 <script>
@@ -227,26 +220,26 @@ plateau.startGame(player1, player2);
 
 
 // Get the modal
-var modal = document.getElementById('myModal');
+var modal4 = document.getElementById('myModal4');
 
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+var btn4 = document.getElementById("myBtn4");
 
 // Get the button that abandon
 var abandonBtn = document.getElementById("leave");
 
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+var span4 = document.getElementsByClassName("close")[1];
 
 // When the user clicks the button, open the modal 
-btn.onclick = function() {
-    modal.style.display = "block";
+btn4.onclick = function() {
+    modal4.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
+span4.onclick = function() {
+    modal4.style.display = "none";
 }
 
 abandonBtn.onclick = function() {
@@ -255,8 +248,8 @@ abandonBtn.onclick = function() {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == modal4) {
+        modal4.style.display = "none";
     }
 }
 

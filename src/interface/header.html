@@ -71,8 +71,16 @@
 <h1> <span> BREAKTHROUGH</span></h1>
 <div align="right">
 	<ul id="menu" >
-	<li><a  style="text-align:center" id="myBtn">Inscription</a>
-	</li><li><a style="text-align:center" id="myBtn2">Connexion</a>
+	
+	<?php 
+		session_start();
+		if(isset($_SESSION['pseudo'])){
+			echo '</li><li><a style="text-align:center" href="principale.php" >Page Principale</a></li>';
+		}else{
+			echo '<li><a  style="text-align:center" id="myBtn">Inscription</a>
+	</li><li><a style="text-align:center" id="myBtn2">Connexion</a>';
+		}
+	?>
 	<div id="myModal" class="modal">
 
   <!-- Modal content -->
@@ -115,13 +123,13 @@
     <div class="field">
       <label for="mdp1">Mot de Passe<font color="Red">*</font></label>
       <br>
-      <input id="mdp1" required="required" type="text">
+      <input id="mdp1" required="required" type="password">
     </div>
 	<div id="result" ></div>
 	<div class="field">
       <label for="mdp2"> Confirmation De Mot de Passe<font color="Red">*</font></label>
       <br>
-      <input id="mp2" required="required" type="text" name="mdp"onkeyup="verif()">
+      <input id="mp2" required="required" type="password" name="mdp"onkeyup="verif()">
     </div>
 
 	
@@ -152,7 +160,7 @@
 			<input type="text" name="pseudo" id="pseudo" required="required" />
 			
 			<label for="password">Mot de passe :</label> 
-			<input type="text" name="password" id="password" required="required"/>
+			<input type="password" name="password" id="password" required="required"/>
 			
 			<input type="submit" value="Connexion" />
 	</fieldset>

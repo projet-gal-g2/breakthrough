@@ -73,14 +73,22 @@
 <h1><span>BREAKTHROUGH</span></h1>
 <div align="center">
 	<ul id="menu" >
-	<li><a href="principale.php">Acceuil</a>
-	</li><li><a href="#">Profil &#x25bc;</a>
-		<ul>
-			<li><a href="#" id="myBtn">Mon Profil</a></li>
-			
-			<li><a href="#">Mes Statistiques</a></li>
-		</ul>
-	</li><li><a href="acceuil.php" id="deco" ?>Déconnexion</a>
+	<?php 
+		if($_SERVER['PHP_SELF'] != "/projet/breakthrough/src/interface/jeu.php"){
+			echo '<li><a href="acceuil.php">Acceuil</a>';
+		}else{
+			echo '<li><a href="#">Acceuil</a>';
+		}
+	?>
+	</li><li><a id="myBtn"> Mon Profil </a>
+	<?php 
+		if($_SERVER['PHP_SELF'] != "/projet/breakthrough/src/interface/jeu.php"){
+			echo '</li><li><a id="deco" >Deconnexion</a></li>';
+		}
+		else{
+			echo '</li><li><a id="de" >Deconnexion</a></li>';
+		}
+	?>
 </ul>
 </div>
 <div id="myModal" class="modal">
@@ -133,7 +141,7 @@
             data:{},
 			success:
 				function(data){
-					alert(data);
+					document.location.href="acceuil.php";
 				}
         });
     });
