@@ -77,7 +77,7 @@
 </body>
 <script>
 	var cpt=0;
-$(document).on("click","#button_jouer",function(){
+    $(document).on("click","#button_jouer",function(){
 	if(cpt==0){
 		$.ajax({
 				type: 'POST',

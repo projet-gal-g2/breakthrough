@@ -10,14 +10,19 @@
     $bdd->query($updateJ1);
     $bdd->query($updateJ2);
 
-    $creation_partie=$bdd->prepare('insert into partie (joueur1, joueur2, type) values (:j1,:j2,:type)');
+    $creation_partie=$bdd->prepare('insert into partie (joueur1, joueur2, type, etat) values (:j1,:j2,:type,:etat)');
     $creation_partie->execute(array(
     							'j1'=>$id_j1,
     							'j2'=>$id_j2,
+                                'etat'=>1,
     							'type'=>$_POST['type']
     							));
+
     $id_game=$bdd->query('SELECT max(id_partie) as id FROM partie')->fetch()['id'];
+
+
     session_start();
+    echo $id_game;
     $_SESSION['idGame'] = $id_game;
 
  ?>

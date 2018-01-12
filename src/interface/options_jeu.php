@@ -6,7 +6,7 @@
 	</td>
 </tr>
 <tr>
-	<td height=20% class="non_aff">
+	<td height=20% id="messageRecherche" class="non_aff">
 		
 	</td>
 </tr>
@@ -22,7 +22,6 @@ $(document).on("click", "#vsIa", function(){
     var random = Math.floor(Math.random() * Math.floor(2));
     var pseudo1;
     var pseudo2;
-    var idGame;
 
     switch(random)
     {
@@ -38,8 +37,6 @@ $(document).on("click", "#vsIa", function(){
 
             break;
     }
-
-
 
     $.ajax(
     {
@@ -56,28 +53,64 @@ $(document).on("click", "#vsIa", function(){
 });
 
 $(document).on("click", "#pvp", function(){
-    var random = Math.floor(Math.random() * Math.floor(1));
-    var pseudo1;
-    var pseudo2;
-    var idGame;
 
-    switch(random)
-    {
-        case 0:
-            pseudo1 = "IA";
-            pseudo2 = $("#vsIa").attr("pseudo");
+    $("#messageRecherche").html("en recherche de joueur ...");
+    $.ajax(
+        {
+            type: "GET",
+            url: "matchmaking.php",
+            datatype: "text",
+            success: function(data) {
+                var random = Math.floor(Math.random() * Math.floor(2));
+                var pseudo1;
+                var pseudo2;
+                var idGame;
 
-            break;
+                switch(random)
+                {
+                    case 0:
+                        pseudo1 = data;
+                        pseudo2 = $("#vsIa").attr("pseudo");
 
-        case 1:
-            pseudo2 = "IA";
-            pseudo1 = $("#vsIa").attr("pseudo");
+                        break;
 
-            break;
-    }
+                    case 1:
+                        pseudo2 = data;
+                        pseudo1 = $("#vsIa").attr("pseudo");
+
+                        break;
+                }
+
+                if (data === "gameFound")
+                {
+                    document.location.href="jeu.php";
+                    $("#messageRecherche").html("Match trouvée !");
+                    console.log("partie déjà créée");
+                }
+                else
+                {
+                    console.log("adversaire trouvé");
+
+                    $.ajax(
+                    {
+                        type: "POST",
+                        url: "creation_partie.php",
+                        datatype: "text",
+                        data:
+                            {
+                                "pseudo1": pseudo1.trim(),
+                                "pseudo2": pseudo2.trim(),
+                                "type": 1
+                            },
+                        success: function(data) { 
+                            $("#messageRecherche").html("Match trouvée !");
+                            document.location.href="jeu.php"; 
+                        }
+                    });
+                }
 
 
-
-
+            }
+        });
 });
 </script>

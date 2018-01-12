@@ -65,12 +65,11 @@ Breakthrough.Plateau = function() {
         };
 
     $(document).on('click','.case',function(){
-        if (!isEndGame)
+        if (!isEndGame && engine.getCurrentPlayer().getPseudo() === $("#mainContainer").attr("playerPseudo"))
         {
             var lign = parseInt($(this).attr('i'));
             var column = parseInt($(this).attr('j'));
             var id_case= "#l" + lign + "c" + column;
-
 
             if($(id_case).hasClass('not_selected')){
                 unSelecteAll();
@@ -110,7 +109,24 @@ Breakthrough.Plateau = function() {
 
                                 engine.majBoard(currentPossibleStrokes[i]);
 
-                                play();
+                                $.ajax(
+                                {
+                                    type: "POST",
+                                    url: "update_game.php",
+                                    data:
+                                        {
+                                            "idGame": parseInt($("#mainContainer").attr("gameId")),
+                                            "departL": from.lign,
+                                            "departC": from.column,
+                                            "arriveL": to.lign,
+                                            "arriveC": to.column
+                                        },
+                                    success: function(data) {
+                                        play();
+                                    }
+                                });
+
+                                
                                 break;
                             }
                         }
@@ -143,18 +159,6 @@ Breakthrough.Plateau = function() {
         doAbandon();
     };
 
-    var increaseTimer = function()
-    {
-        time++;
-        $("#timer").html("Timer : " + time + "s");
-
-        if (time >= 30)
-        {
-            window.clearInterval(intervalId);
-            doAbandon();
-        }
-    };
-
     var doAbandon = function()
     {
         window.clearInterval(intervalId);
@@ -182,6 +186,18 @@ Breakthrough.Plateau = function() {
             });
     };
 
+    var increaseTimer = function()
+    {
+        time++;
+        $("#timer").html("Timer : " + time + "s");
+
+        if (time >= 30)
+        {
+            window.clearInterval(intervalId);
+            doAbandon();
+        }
+    };
+
     var play = function()
     {
         if (intervalId !== null)
@@ -204,7 +220,7 @@ Breakthrough.Plateau = function() {
         var possiblesStroke;
         var strokeChoose;
         var currentPlayer = engine.getCurrentPlayer();
-
+        alert($("#mainContainer").attr("playerPseudo") + " "+ currentPlayer.getPseudo());
         if (currentPlayer.isIA())
         {
             possiblesStroke = engine.possibleStroke();
@@ -218,6 +234,40 @@ Breakthrough.Plateau = function() {
             engine.majBoard(strokeChoose);
 
             play();
+        }
+        else if (currentPlayer.getPseudo() !== $("#mainContainer").attr("playerPseudo"))
+        {
+            $.ajax(
+            {
+                type: "GET",
+                url: "wait_turn.php",
+                datatype: "text",
+                data:
+                    {
+                        "idGame": parseInt($("#mainContainer").attr("gameId"))
+                    },
+                success: function(data) {
+                    alert(data);
+                    if (data === "Le joueur adversaire a abandonné !")
+                    {
+                        alert(data);
+                    }
+                    else
+                    {
+                        var coords = data.split(',');
+
+                        var from = new SelectedPawn(parseInt(coords[0]), parseInt(coords[1]));
+                        var to = new SelectedPawn(parseInt(coords[2]), parseInt(coords[3]));
+
+                        movePawn(from, to);
+
+                        engine.majBoard(strokeChoose);
+
+                        play();
+
+                    }
+                }
+            });
         }
 
     };
