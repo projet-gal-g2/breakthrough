@@ -211,7 +211,6 @@ Breakthrough.Plateau = function() {
 
         if (engine.currentPlayerWin() === null){
             engine.nextPlayer();
-            window.clearInterval(intervalId);
         }
         else
         {
