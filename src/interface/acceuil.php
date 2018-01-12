@@ -22,10 +22,9 @@
 	<div class="container">
 
 		<div class="row"> 
-			 <div class="col-sm-4 col-md-5 col-lg-6 mini_intro">
-				<h3>Vidéo</h3>
-				<p>Lorem ipsum dolor..</p>
-				<p>Ut enim ad..</p>
+			 <div class="col-sm-4 col-md-5 col-lg-6 mini_intro" style="margin-top:-25">
+				<h2>Image</h2>
+				<img src="breakthrough.png" alt="Breakthrough" width="400" height="250">
 			</div>
 			<div class="col-sm-4 col-md-5 col-lg-6 mini_intro">
 				<?php include "leader_board.php" ;?>
