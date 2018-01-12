@@ -20,6 +20,15 @@
 
     $id_game=$bdd->query('SELECT max(id_partie) as id FROM partie')->fetch()['id'];
 
+    $creation_plateau=$bdd->prepare('insert into plateau (id_partie, departL, departC, arriveL, arriveC) values (:id,:dpL,:dpC,:arL,:arC)');
+    $creation_plateau->execute(array(
+        							'id'=>$id_game,
+        							'dpL'=>-1,
+                                    'dpC'=>-1,
+        							'arL'=>-1,
+        							'arC'=>-1
+        							));
+
 
     session_start();
     echo $id_game;

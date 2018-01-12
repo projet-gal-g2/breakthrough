@@ -220,7 +220,7 @@ Breakthrough.Plateau = function() {
         var possiblesStroke;
         var strokeChoose;
         var currentPlayer = engine.getCurrentPlayer();
-        alert($("#mainContainer").attr("playerPseudo") + " "+ currentPlayer.getPseudo());
+
         if (currentPlayer.isIA())
         {
             possiblesStroke = engine.possibleStroke();
