@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <html>
  <head>
   <title>Breackthrough</title>
@@ -13,31 +14,39 @@
     <script type="text/javascript" src="../Javascript/Plateau.js"></script>
  </head>
  <style>
+.foot{
+	bottom: 0px;
+}
+.taille300{
+	height:300px;
+}
+.test{
+	border: solid black 1px;
+}
+.taille400{
+	height:400px;
+}
 .abandonner {
     position: absolute;
-	right : 350px;
-    bottom: 150px;
+    bottom: 0px;
 }
 .time {
     position: absolute;
-	right : 350px;
-    top: 200px;
+    top: 0px;
     width: 200px;
     border: 3px solid #582900;
     padding: 5px;
 }
 .Joueur1 {
     position: absolute;
-	left : 350px;
-    top: 200px;
+    top: 0px;
     width: 200px;
     border: 3px solid #582900;
     padding: 5px;
 }
 .Joueur2 {
     position: absolute;
-	left : 350px;
-    bottom: 150px;
+	bottom:0px;
     width: 200px;
     border: 3px solid #582900;
     padding: 5px;
@@ -112,42 +121,67 @@
 }
 .btregle {
     position: absolute;
-	right : 275px;
-    bottom: 150px;
+    bottom: 0px;
+    left : 150px;
 }
 </style>
  <body>
- <?php
-
-
- ?>
+ <div style="position:fixed;left:0px;bottom:50%;" id="profile_container"></div>
 <?php include "header2.html"; ?>
 <?php
-    $_POST['pseudo1']="IA";
-    $_POST['pseudo2']="le_bagnard";
-    $_POST['idGame'] = 1;
-    $_POST['idj1'] = -1;
-    $_POST['idj2'] = 1;
+    include "../bdd/connect_pdo.php";
+
+	echo "pseudo est : ".$_SESSION["pseudo"];
+	
+	if(!isset($_SESSION["pseudo"])){
+		header("location: acceuil.php");
+	}
+
+    $id_game = $_SESSION['idGame'];
+    $sql='select * from partie where id_partie='.$id_game;
+    $tab_partie=$bdd->query($sql)->fetch();
+
+    $tab_j1=$bdd->query('select id_usr,pseudo from utilisateur where id_usr ="'.$tab_partie['joueur1'].'"')->fetch();
+    $tab_j2=$bdd->query('select id_usr,pseudo from utilisateur where id_usr ="'.$tab_partie['joueur2'].'"')->fetch();
+
+    $_POST['pseudo1']=$tab_j1['pseudo'];
+    $_POST['pseudo2']=$tab_j2['pseudo'];
+    $_POST['idGame'] = $id_game;
+    $_POST['idj1'] = $tab_j1['id_usr'];
+    $_POST['idj2'] = $tab_j2['id_usr'];
+
+
 
 ?>
-<div class = "abandonner">
- <button type="button" id="leave" align="middle-right" class="btn btn-danger">Abandonner</button>
-</div>
-<div class="time">
-  <p id="timer" align="left">Time :</p>
-</div>
-<div class="joueur1" pseudo=<?php echo $_POST['pseudo1'];?> id=<?php echo $_POST['idj1'];?>>
-  <p align="left">Joueur1 : <?php echo $_POST['pseudo1'];?></p>
-</div>
-<div class="joueur2" pseudo=<?php echo $_POST['pseudo2'];?> id=<?php echo $_POST['idj2'];?>>
-  <p align="left">Joueur2 : <?php echo $_POST['pseudo2'];?></p>
-</div>
-<div class="btregle"><button type="button" align="middle-right" class="btn btn-danger" id="myBtn">Règles</button> </div>
+<div class="container" id="mainContainer" gameId="<?php echo $_SESSION['idGame']; ?>" playerPseudo="<?php echo $_SESSION['pseudo']; ?>">
 
-<div class="gameContainer" id=<?php echo $_POST['idGame'];?>>
-    <div style="display: inline-block; width: 1px; vertical-align:middle; height=100%;"></div>
-    <div id="pContainer" style="display: inline-block; vertical-align:middle;"></div>
-</div>
+		<div class="row" style=" margin-top:50px" > 
+			<div class="col-sm-1 col-md-2 col-lg-3 intro mini_intro taille400" pseudo=<?php echo $_POST['pseudo1'];?> id=<?php echo $_POST['idj1'];?>>
+				<div class="row joueur1 pseudo_joueur" pseudo=<?php echo $_POST['pseudo1'];?> id=<?php echo $_POST['idj1'];?>>
+					<p align="left">Joueur1 : <?php echo $_POST['pseudo1'];?></p>
+				</div>
+				<div class="row joueur2 pseudo_joueur" pseudo=<?php echo $_POST['pseudo2'];?> id=<?php echo $_POST['idj2'];?>>
+					<p align="left">Joueur2 : <?php echo $_POST['pseudo2'];?></p>
+				</div>
+			</div>
+			<div class="col-sm-10 col-md-8 col-lg-6 intro mini_intro " id=<?php echo $_POST['idGame'];?>>
+				<div style="display: inline-block; width: 1px; vertical-align:middle; height=100%;"></div>
+				<div id="pContainer" style="display: inline-block; vertical-align:middle;"></div>
+			</div>
+			<div class="col-sm-1 col-md-2 col-lg-3 intro mini_intro taille400">
+				<div class="time row">
+					<p id="timer" align="left">Time :</p>
+				</div>
+				<div class="abandonner row">
+					<button type="button" id="leave" align="middle-right" class="btn btn-danger">Abandonner</button>
+				</div>
+				<div class="row btregle"><button type="button" align="middle-right" class="btn btn-danger" id="myBtn">Règles</button> </div>
+			</div>
+		</div>
+		<div class="row" style="margin-top:20%;">
+				<?php include "footer.html"; ?>
+		</div>
+
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -174,6 +208,7 @@ La partie se termine si un joueur atteint la rangée de départ de l'adversaire.
   </div>
 
 </div>
+
 <script>
 
 var plateau = new Breakthrough.Plateau();
@@ -182,8 +217,11 @@ var pseudo2 = $(".joueur2").attr("pseudo");
 var idj1 = parseInt($(".joueur1").attr("id"));
 var idj2 = parseInt($(".joueur2").attr("id"));
 
-var player1 = new Breakthrough.Player(Breakthrough.Piece.WHITE, true, pseudo1, idj1);
-var player2 = new Breakthrough.Player(Breakthrough.Piece.BLACK, false, pseudo2, idj2);
+var isP1Ia = (idj1 === -1);
+var isP2Ia = (idj2 === -1);
+
+var player1 = new Breakthrough.Player(Breakthrough.Piece.WHITE, isP1Ia, pseudo1, idj1);
+var player2 = new Breakthrough.Player(Breakthrough.Piece.BLACK, isP2Ia, pseudo2, idj2);
 
 plateau.startGame(player1, player2);
 
@@ -196,6 +234,7 @@ var btn = document.getElementById("myBtn");
 
 // Get the button that abandon
 var abandonBtn = document.getElementById("leave");
+
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -221,13 +260,28 @@ window.onclick = function(event) {
     }
 }
 
+$(".pseudo_joueur").mouseover(function(){
+    $.ajax({
+    				type: 'POST',
+    				url: 'profil_hover.php',
+    				data:{pseudo:$(this).attr("pseudo")},
+    				success:
+    					function(data){
+    						$("#profile_container").html(data);
+    						$("#profile_container").css('border-radius','10px');
+    						$("#profile_container").css('border-style','groove');
+    						$("#profile_container").css('border-width','thick');
+    					}
+    			});
+});
+
 
 
 </script>
-<footer>
-<?php include "footer.html"; ?></footer>
+
 
 
 
 </body>
+
 </html>
