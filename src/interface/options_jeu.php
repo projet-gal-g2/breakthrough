@@ -19,24 +19,12 @@
 
 <script>
 $(document).on("click", "#vsIa", function(){
-    var random = Math.floor(Math.random() * Math.floor(2));
+
     var pseudo1;
     var pseudo2;
 
-    switch(random)
-    {
-        case 0:
-            pseudo1 = "IA";
-            pseudo2 = $("#vsIa").attr("pseudo");
-
-            break;
-
-        case 1:
-            pseudo2 = "IA";
-            pseudo1 = $("#vsIa").attr("pseudo");
-
-            break;
-    }
+    pseudo2 = "IA";
+    pseudo1 = $("#vsIa").attr("pseudo");
 
     $.ajax(
     {
