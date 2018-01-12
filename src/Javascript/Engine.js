@@ -6,8 +6,7 @@ Breakthrough.SIZEBOARD = Breakthrough.ONE_LINE * Breakthrough.ONE_LINE;
 
 // Définition de la classe
 Breakthrough.Engine = function () {
-
-		
+    
 	var game_Board = new Array(Breakthrough.SIZEBOARD);
 	// Définition du joueur courant / joueur adverse
     var currentPlayer;
@@ -15,6 +14,47 @@ Breakthrough.Engine = function () {
     var player1;
     var player2;
 
+    this.clone = function () {
+        var copyGameBoard = [];
+        for ( var index = 0; index < game_Board.length; index++){
+            copyGameBoard[index] = game_Board[index];
+        }
+        var copyCurrentPlayer = new Breakthrough.Player(currentPlayer.getColorPlayer(), currentPlayer.isIA(), currentPlayer.getPseudo(), currentPlayer.getId());
+        var copyOpposingPlayer = new Breakthrough.Player(opposingPlayer.getColorPlayer(), opposingPlayer.isIA(), opposingPlayer.getPseudo(), opposingPlayer.getId());
+        var copyPlayer1 = new Breakthrough.Player(player1.getColorPlayer(), player1.isIA(), player1.getPseudo(), player1.getId());
+        var copyPlayer2 = new Breakthrough.Player(player2.getColorPlayer(), player2.isIA(), player2.getPseudo(), player2.getId());
+        return [copyGameBoard,copyCurrentPlayer, copyOpposingPlayer, copyPlayer1, copyPlayer2];
+    };
+
+    this.setBoard = function (gameBoard){
+        for (var index = 0; index < gameBoard.length; index++){
+            game_Board[index] = gameBoard[index];
+        }
+    };
+
+    this.setCurrentPlayer = function (player){
+        currentPlayer = player;
+    };
+
+    this.setOpposingPlayer = function (player){
+        opposingPlayer = player;
+    };
+
+    this.setPlayer1 = function (player){
+        player1 = player;
+    };
+
+    this.setPlayer2 = function (player){
+        player2 = player;
+    };
+
+    this.getPlayer1 = function () {
+        return player1;
+    };
+
+    this.getPlayer2 = function (){
+        return player2;
+    };
 	this.initialisation = function () {
 		var lastTwoLines = Breakthrough.SIZEBOARD - (Breakthrough.ONE_LINE*2);
 		// Parcours des deux premières lignes
@@ -39,7 +79,8 @@ Breakthrough.Engine = function () {
 
         currentPlayer = player2;
         opposingPlayer = player1;
-    }
+
+    };
 
 	this.displayGameBoard = function () {
         var stringGameBoard ='\n';

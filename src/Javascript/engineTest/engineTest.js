@@ -125,39 +125,6 @@ BreakthroughTestCase.prototype.testConvertCoord = function () {
     assertTrue( test === 8);
 };
 
-// Test du basculement de joueur
-BreakthroughTestCase.prototype.testSwapCurrentPlayer = function (){
-    var newEngine = new Breakthrough.Engine();
-    newEngine.initialisation();
-
-    var firstPlayer = newEngine.getCurrentPlayer();
-    newEngine.nextPlayer();
-
-    assertTrue(newEngine.getCurrentPlayer() !== firstPlayer);
-};
-// Test du choix Humain d'un coup possible
-BreakthroughTestCase.prototype.testChooseStroke = function () {
-    var newEngine = new Breakthrough.Engine();
-    var player = new Breakthrough.Human();
-    newEngine.initialisation();
-    newEngine.nextPlayer();
-    var possibleStroke = newEngine.possibleStroke();
-    //console.log('Coups possibles : \n' + possibleStroke );
-    var startStroke = 8;
-    //console.log("Taille liste coups possibles : " + possibleStroke.length);
-    var possibleChooseStroke = player.chooseStroke(possibleStroke, startStroke);
-
-    var counter = 0;
-    //console.log('Taille liste coups possibles en fonction du coup de départ : ' + possibleChooseStroke.length);
-    for ( var indexPossible = 0; indexPossible < possibleChooseStroke.length; indexPossible ++) {
-        if ( possibleChooseStroke[indexPossible].getStartStroke() !== startStroke ){
-            counter ++;
-        }
-    }
-
-   // console.log('Coups possibles après choix coup départ : \n ' + possibleChooseStroke);
-    assertTrue (counter === 0 && possibleChooseStroke.length !== 0 );
-};
 
 // Test conversion Coup en Coordonnées
 BreakthroughTestCase.prototype.testStrokeToCoord = function () {
@@ -170,50 +137,50 @@ BreakthroughTestCase.prototype.testStrokeToCoord = function () {
     assertTrue(tabCoord[0] === 1 && tabCoord[1] === 2 && tabCoord[2] === 7 && tabCoord[3] === 6);
 };
 
-// Test du choix d'un coup par l'I.A Random
-BreakthroughTestCase.prototype.testRandomPlay = function () {
+
+// Test IA alpha beta
+BreakthroughTestCase.prototype.testIAAlpha = function () {
     var newEngine = new Breakthrough.Engine();
-    var randomIa = new Breakthrough.Random();
+    var p2 = new Breakthrough.Player(Breakthrough.Piece.BLACK, true, "ia", -1);
+    var p1 = new Breakthrough.Player(Breakthrough.Piece.WHITE, false, "player", 0);
+    var possibleStroke = [];
+    var alpha = new Breakthrough.AlphaBeta(newEngine);
+    var countMaxStroke =0;
+
     newEngine.initialisation();
-    var counter = 0;
-    var possibleStroke = newEngine.possibleStroke();
-    var strokeChoose = randomIa.randomChooseStroke(possibleStroke);
+    newEngine.initializePlayer(p1, p2);
 
-    for ( var indexStroke = 0; indexStroke < possibleStroke.length; indexStroke++){
-        if (possibleStroke[indexStroke].getStartStroke() === strokeChoose.getStartStroke() &&
-        possibleStroke[indexStroke].getEndStroke() === strokeChoose.getEndStroke()){
-            counter++;
-            break;
-        }
-    }
-    assertTrue (counter === 1);
-};
+    var gamelife = 0;
 
-// Test de la mise à jour du plateau de jeu après un coup
-BreakthroughTestCase.prototype.testMajBoard = function () {
-    var newEngine = new Breakthrough.Engine();
-    var randomIa = new Breakthrough.Random();
-    newEngine.initialisation();
-    newEngine.displayGameBoard();
-    var initialGameBoard = newEngine.getGameBoard();
-    var possiblesStroke;
-    var strokeChoose;
-
-    var gameLife = 0;
-    console.log("Turn of player " + newEngine.getCurrentPlayer());
-    while ( gameLife !== 1){
-        possiblesStroke = newEngine.possibleStroke();
-        strokeChoose = randomIa.randomChooseStroke(possiblesStroke);
-        newEngine.majBoard(strokeChoose);
-        console.log(strokeChoose);
-        newEngine.displayGameBoard();
-        if (newEngine.currentPlayerWin() !== Breakthrough.Piece.EMPTY){
-            gameLife = 1;
-            newEngine.displayGameBoard();
-            console.log("Joueur " + newEngine.getCurrentPlayer() + " win !");
-        } else {
+    while (gamelife !== 1){
+        if (newEngine.getCurrentPlayer().isIA()) {
+            var tabCopyEngine = newEngine.clone();
+            var copyEngine = new Breakthrough.Engine();
+            copyEngine.setBoard(tabCopyEngine[0]);
+            copyEngine.setCurrentPlayer(tabCopyEngine[1]);
+            copyEngine.setOpposingPlayer(tabCopyEngine[2]);
+            copyEngine.setPlayer1(tabCopyEngine[3]);
+            copyEngine.setPlayer2(tabCopyEngine[4]);
+            var bestChooseStroke = alpha.moveStroke(copyEngine);
+            newEngine.majBoard(bestChooseStroke);
+            //console.log("Choix de l'i.a alpha");
+            countMaxStroke += alpha.getCounterStroke();
+            //console.log("Nombre de coups simulés ce tour : " + alpha.getCounterStroke());
+            //newEngine.displayGameBoard();
             newEngine.nextPlayer();
-            console.log("Turn of player " + newEngine.getCurrentPlayer());
+        } else {
+            //console.log("Human");
+            possibleStroke = newEngine.possibleStroke();
+            newEngine.majBoard(newEngine.randomChooseStroke(possibleStroke));
+            //console.log("Choix de l'humain");
+            //newEngine.displayGameBoard();
+            newEngine.nextPlayer();
+        }
+        if( newEngine.currentPlayerWin() !== null ){
+            console.log(newEngine.getOpposingPlayer());
+            gamelife = 1;
         }
     }
+    newEngine.displayGameBoard();
+    console.log("Nombre de coup max simulés : " + countMaxStroke);
 };

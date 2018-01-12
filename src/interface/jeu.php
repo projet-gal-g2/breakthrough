@@ -11,6 +11,7 @@
     <script type="text/javascript" src="../Javascript/Stroke.js"></script>
     <script type="text/javascript" src="../Javascript/Player.js"></script>
     <script type="text/javascript" src="../Javascript/Engine.js"></script>
+    <script type="text/javascript" src="../Javascript/AlphaBeta.js"></script>
     <script type="text/javascript" src="../Javascript/Plateau.js"></script>
  </head>
  <style>

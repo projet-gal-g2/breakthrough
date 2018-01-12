@@ -211,6 +211,7 @@ Breakthrough.Plateau = function() {
 
         if (engine.currentPlayerWin() === null){
             engine.nextPlayer();
+            window.clearInterval(intervalId);
         }
         else
         {
@@ -220,18 +221,28 @@ Breakthrough.Plateau = function() {
         var possiblesStroke;
         var strokeChoose;
         var currentPlayer = engine.getCurrentPlayer();
-
+        console.log(currentPlayer);
         if (currentPlayer.isIA())
         {
-            possiblesStroke = engine.possibleStroke();
-            strokeChoose = engine.randomChooseStroke(possiblesStroke);
-            var coords = engine.strokeToCoord(strokeChoose);
+            var alpha = new Breakthrough.AlphaBeta();
+           // possiblesStroke = engine.possibleStroke();
+            // strokeChoose = engine.randomChooseStroke(possiblesStroke);
+
+            var tabCopyEngine = engine.clone();
+            var copyEngine = new Breakthrough.Engine();
+            copyEngine.setBoard(tabCopyEngine[0]);
+            copyEngine.setCurrentPlayer(tabCopyEngine[1]);
+            copyEngine.setOpposingPlayer(tabCopyEngine[2]);
+            copyEngine.setPlayer1(tabCopyEngine[3]);
+            copyEngine.setPlayer2(tabCopyEngine[4]);
+            var bestChooseStroke = alpha.moveStroke(copyEngine);
+            var coords = engine.strokeToCoord(bestChooseStroke);
             var from = new SelectedPawn(coords[0], coords[1]);
             var to = new SelectedPawn(coords[2], coords[3]);
 
             movePawn(from, to);
 
-            engine.majBoard(strokeChoose);
+            engine.majBoard(bestChooseStroke);
 
             play();
         }
