@@ -221,9 +221,10 @@ Breakthrough.Plateau = function() {
         var possiblesStroke;
         var strokeChoose;
         var currentPlayer = engine.getCurrentPlayer();
-
+        console.log(currentPlayer);
         if (currentPlayer.isIA())
         {
+            var alpha = new Breakthrough.AlphaBeta();
            // possiblesStroke = engine.possibleStroke();
             // strokeChoose = engine.randomChooseStroke(possiblesStroke);
 
@@ -241,7 +242,7 @@ Breakthrough.Plateau = function() {
 
             movePawn(from, to);
 
-            engine.majBoard(strokeChoose);
+            engine.majBoard(bestChooseStroke);
 
             play();
         }

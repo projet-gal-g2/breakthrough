@@ -77,8 +77,8 @@ Breakthrough.Engine = function () {
         player1 = p1;
         player2 = p2;
 
-        currentPlayer = player1;
-        opposingPlayer = player2;
+        currentPlayer = player2;
+        opposingPlayer = player1;
 
     };
 
