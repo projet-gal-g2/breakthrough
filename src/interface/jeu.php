@@ -135,8 +135,8 @@
 	}
 	*/
 
-    $_POST['pseudo1']="IA";
-    $_POST['pseudo2']="le_bagnard";
+    $_POST['pseudo1']=$_SESSION["pseudo"];
+    $_POST['pseudo2']=$_POST['pseudo2'];
     $_POST['idGame'] = 1;
     $_POST['idj1'] = -1;
     $_POST['idj2'] = 1;
