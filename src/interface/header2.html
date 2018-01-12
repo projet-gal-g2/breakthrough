@@ -74,16 +74,16 @@
 <div align="center">
 	<ul id="menu" >
 	<?php 
-		if($_SERVER['PHP_SELF'] != "/projet/breakthrough/src/interface/jeu.php"){
+		if(!stripos($_SERVER['PHP_SELF'], "jeu.php")){
 			echo '<li><a href="acceuil.php">Acceuil</a>';
 		}else{
 			echo '<li><a href="#">Acceuil</a>';
 		}
 	?>
 	</li><li><a id="myBtn"> Mon Profil </a>
-	<?php 
-		if($_SERVER['PHP_SELF'] != "/projet/breakthrough/src/interface/jeu.php"){
-			echo '</li><li><a id="deco" >Deconnexion</a></li>';
+	<?php
+		if(!stripos($_SERVER['PHP_SELF'], "jeu.php")){
+			echo '</li><li><a id="deco" >Deconexion</a></li>';
 		}
 		else{
 			echo '</li><li><a id="de" >Deconnexion</a></li>';

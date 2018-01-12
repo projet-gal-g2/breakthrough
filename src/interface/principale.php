@@ -31,6 +31,8 @@
 								'mdp'=>$_POST['mdp'],
 								'en_ligne'=>1
 								));
+            $_SESSION['pseudo']=$_POST['pseudo'];
+            header('Location: principale.php');
 		}else{
 			$sql='select * from utilisateur where pseudo LIKE "'.$_POST['pseudo'].'" and mdp LIKE "'.$_POST['password'].'"';
 			$res = $bdd->query($sql);

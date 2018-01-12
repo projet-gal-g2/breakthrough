@@ -39,14 +39,14 @@
 }
 .Joueur1 {
     position: absolute;
-    top: 0px;
+    bottom: 0px;
     width: 200px;
     border: 3px solid #582900;
     padding: 5px;
 }
 .Joueur2 {
     position: absolute;
-	bottom:0px;
+	top:0px;
     width: 200px;
     border: 3px solid #582900;
     padding: 5px;
