@@ -16,7 +16,7 @@
 <body>
 
 
-	<?php include "connect_pdo.php"; ?>
+	<?php include "../bdd/connect_pdo.php"; ?>
 	<?php
 	session_start();
 	$lock=0;
@@ -68,9 +68,12 @@
 				<?php include "leader_board.php" ?>
 			</div>
 		</div>
+			
+		<div class="row" style="margin-top:30%;">
+				<?php include "footer.html"; ?>
+		</div>
 	</div>	
-	
-	<footer><?php include "footer.html"; ?></footer>
+
 </body>
 <script>
 	var cpt=0;
