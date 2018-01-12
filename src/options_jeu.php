@@ -55,24 +55,46 @@ var interval;
 var lock=false;
 var cpt=0;
 var attente=30;
+var opponent="";
 $(document).on("click", "#pvp", function(){
 	if(!lock){
 		lock=true;
-		interval=setInterval(findOpponent(), 1000);
+		interval=setInterval(findOpponent, 3000);
+		$.ajax({
+			type: "POST",
+			url: "en_attente.php",
+			data:{pseudo:$("#vsIa").attr("pseudo"),timeout:0},
+			success: 
+				function(data) { 
+					console.log("vous etes en attente");
+				}
+		});
 	}
+	
 });
+var my_trim = function(str){
+	var new_str="";
+	for(var i=0;i<str.length;i++){
+		if(str.charCodeAt(i) > 25){
+			new_str+=str.charAt(i);
+		}
+	}
+	return new_str;
+}
 var findOpponent = function(){
-	var opponent="--null"
+	cpt++;
 	 $.ajax({
 		type: "POST",
 		url: "matchmaking.php",
 		data:{pseudo:$("#vsIa").attr("pseudo")},
 		success: 
-			function(data) { 
-				opponent=data;
+			function(data) {
+				opponent=my_trim(data);
 			}
 	});
-	if(opponent !="--null"){
+	opponent=opponent.trim();
+	console.log(opponent=="");
+	if(opponent !=""){
 		$.ajax({
 			type: "POST",
 			url: "creation_partie.php",
@@ -83,11 +105,20 @@ var findOpponent = function(){
 				}
 		});
 	}
-	if(cpt>30){
+	if(cpt>attente){
 		cpt=0;
 		lock=false;
 		clearInterval(interval);
-		alert("pas de parties trouvées");
+		
+		$.ajax({
+			type: "POST",
+			url: "en_attente.php",
+			data:{pseudo:$("#vsIa").attr("pseudo"),timeout:1},
+			success: 
+				function(data) { 
+					alert("pas de parties trouvées");
+				}
+		});
 	}
 };
 </script>
