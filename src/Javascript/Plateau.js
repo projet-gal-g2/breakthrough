@@ -205,9 +205,18 @@ Breakthrough.Plateau = function() {
 
         if (currentPlayer.isIA())
         {
-            possiblesStroke = engine.possibleStroke();
-            strokeChoose = engine.randomChooseStroke(possiblesStroke);
-            var coords = engine.strokeToCoord(strokeChoose);
+           // possiblesStroke = engine.possibleStroke();
+            // strokeChoose = engine.randomChooseStroke(possiblesStroke);
+
+            var tabCopyEngine = engine.clone();
+            var copyEngine = new Breakthrough.Engine();
+            copyEngine.setBoard(tabCopyEngine[0]);
+            copyEngine.setCurrentPlayer(tabCopyEngine[1]);
+            copyEngine.setOpposingPlayer(tabCopyEngine[2]);
+            copyEngine.setPlayer1(tabCopyEngine[3]);
+            copyEngine.setPlayer2(tabCopyEngine[4]);
+            var bestChooseStroke = alpha.moveStroke(copyEngine);
+            var coords = engine.strokeToCoord(bestChooseStroke);
             var from = new SelectedPawn(coords[0], coords[1]);
             var to = new SelectedPawn(coords[2], coords[3]);
 
